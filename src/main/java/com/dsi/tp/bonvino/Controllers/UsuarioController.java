@@ -1,7 +1,7 @@
 package com.dsi.tp.bonvino.Controllers;
 
-import com.dsi.tp.bonvino.Models.Bodega;
-import com.dsi.tp.bonvino.Repositories.BodegaRepository;
+import com.dsi.tp.bonvino.Models.Usuario;
+import com.dsi.tp.bonvino.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bodegas")
-public class BodegaController {
+@RequestMapping("/usuarios")
+public class UsuarioController {
     @Autowired
-    private BodegaRepository bodegaRepository;
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public List<Bodega> getAll() {
-        return bodegaRepository.findAll();
+    public List<Usuario> getAll() {
+        return usuarioRepository.findAll();
     }
 }

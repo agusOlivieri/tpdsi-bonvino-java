@@ -1,12 +1,14 @@
 package com.dsi.tp.bonvino.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Varietal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +21,5 @@ public class Varietal {
 
     @OneToOne
     @JoinColumn(name = "tipo_uva")
-    private TipoUva tipo_uva;
-
-    @OneToOne(mappedBy = "varietal", cascade = CascadeType.ALL)
-    private Vino vino;
+    private TipoUva tipoUva;
 }

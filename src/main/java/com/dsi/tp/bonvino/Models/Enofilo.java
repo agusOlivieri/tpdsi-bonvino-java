@@ -1,14 +1,14 @@
 package com.dsi.tp.bonvino.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Enofilo {
 
     @Id
@@ -21,15 +21,13 @@ public class Enofilo {
     @Column(name = "imagen_perfil")
     private String imagenPerfil;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "siguiendo")
     private Siguiendo siguiendo;
-
     @OneToOne
     @JoinColumn(name = "usuario")
     private Usuario usuario;
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "vino")
     private Vino vino;
 }

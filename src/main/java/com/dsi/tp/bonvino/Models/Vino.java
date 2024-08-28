@@ -1,12 +1,16 @@
 package com.dsi.tp.bonvino.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Vino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,18 +27,12 @@ public class Vino {
     private double precioARS;
 
     @OneToOne
-    @JoinColumn(name = "maridaje")
-    private Maridaje maridaje;
-
-    @OneToOne
-    @JoinColumn(name = "varietal")
-    private Varietal varietal;
-
-    @OneToOne
     @JoinColumn(name = "bodega")
     private Bodega bodega;
-
-    @OneToOne(mappedBy = "vino", cascade = CascadeType.ALL)
-    private Enofilo enofilo;
-
+    @ManyToOne
+    @JoinColumn(name = "maridaje")
+    private Maridaje maridajes;
+    @ManyToOne
+    @JoinColumn(name = "varietal")
+    private Varietal varietales;
 }

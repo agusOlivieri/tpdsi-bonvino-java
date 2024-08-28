@@ -1,16 +1,17 @@
 package com.dsi.tp.bonvino.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bodega {
 
     @Id
@@ -31,9 +32,6 @@ public class Bodega {
 
     @Column(name = "ultima_actualizacion")
     private LocalDateTime ultimaActualizacion;
-
-    @OneToMany(mappedBy = "bodega", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Siguiendo> seguidores;
 
 }
 

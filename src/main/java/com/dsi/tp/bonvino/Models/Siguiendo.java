@@ -1,14 +1,17 @@
 package com.dsi.tp.bonvino.Models;
 
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Siguiendo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +23,7 @@ public class Siguiendo {
     @Column(name = "fecha_fin")
     private LocalDateTime fechaFin;
 
-    @ManyToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "bodega")
+    @OneToOne
+    @JoinColumn(name = "bodega_id")
     private Bodega bodega;
-
-    //@OneToOne(mappedBy = "siguiendo", cascade = CascadeType.ALL)
-    //private Enofilo enofilo;
 }

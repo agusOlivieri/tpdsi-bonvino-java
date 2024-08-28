@@ -1,12 +1,15 @@
 package com.dsi.tp.bonvino.Models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Entity
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tipo_uva")
 public class TipoUva {
     @Id
@@ -16,7 +19,5 @@ public class TipoUva {
     private String nombre;
     private  String descripcion;
 
-    @OneToOne(mappedBy = "tipo_uva", cascade = CascadeType.ALL)
-    private Varietal varietal;
 
 }

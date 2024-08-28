@@ -1,15 +1,16 @@
 package com.dsi.tp.bonvino.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
+@Getter
+@Setter
 public class Bodega {
 
     @Id
@@ -31,53 +32,8 @@ public class Bodega {
     @Column(name = "ultima_actualizacion")
     private LocalDateTime ultimaActualizacion;
 
-    // Getters y Setters
-    public Integer getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "bodega", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Siguiendo> seguidores;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getHistoria() {
-        return historia;
-    }
-
-    public void setHistoria(String historia) {
-        this.historia = historia;
-    }
-
-    public Integer getPeriodoActualizacion() {
-        return periodoActualizacion;
-    }
-
-    public void setPeriodoActualizacion(Integer periodoActualizacion) {
-        this.periodoActualizacion = periodoActualizacion;
-    }
-
-    public LocalDateTime getUltimaActualizacion() {
-        return ultimaActualizacion;
-    }
-
-    public void setUltimaActualizacion(LocalDateTime ultimaActualizacion) {
-        this.ultimaActualizacion = ultimaActualizacion;
-    }
 }
 

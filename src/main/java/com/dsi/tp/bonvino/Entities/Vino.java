@@ -1,9 +1,7 @@
 package com.dsi.tp.bonvino.Entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -20,7 +18,7 @@ public class Vino {
     @Column(name = "imagen_etiqueta")
     private String imagenEtiqueta;
     @Column(name = "nota_cata")
-    private String notaDeCata;
+    private String notaCata;
     @Column(name = "precio_ars")
     private BigDecimal precioARS;
 
@@ -44,7 +42,7 @@ public class Vino {
         this.imagenEtiqueta = imagen;
         this.nombre = nombre;
         this.precioARS = precio;
-        this.notaDeCata = notaDeCata;
+        this.notaCata = notaDeCata;
         this.maridaje = maridaje;
         this.bodega = bodega;
         this.varietal = Vino.crearVarietal(descVarietal, porcentajeComp, tipoUva);
@@ -64,7 +62,7 @@ public class Vino {
     }
 
     public void setNotaCata(String nota) {
-        this.notaDeCata = nota;
+        this.notaCata = nota;
     }
 
     public void setImagenEtiqueta(String imagen) {

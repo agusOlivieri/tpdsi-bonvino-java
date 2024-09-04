@@ -1,6 +1,6 @@
 package com.dsi.tp.bonvino.Controllers;
 
-import com.dsi.tp.bonvino.Models.Varietal;
+import com.dsi.tp.bonvino.Entities.Varietal;
 import com.dsi.tp.bonvino.Repositories.VarietalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

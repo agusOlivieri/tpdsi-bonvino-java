@@ -1,25 +1,27 @@
-package com.dsi.tp.bonvino.Models;
+package com.dsi.tp.bonvino.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Varietal {
+@Table(name = "tipo_uva")
+public class TipoUva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String descripcion;
+    private String nombre;
+    private  String descripcion;
 
-    @Column(name = "porcentaje_composicion")
-    private int porcentajeComposicion;
+    // metodos
 
-    @OneToOne
-    @JoinColumn(name = "tipo_uva")
-    private TipoUva tipoUva;
+    public boolean esTipoUva(TipoUva tipoUva) {
+        return this.equals(tipoUva);
+    }
 }

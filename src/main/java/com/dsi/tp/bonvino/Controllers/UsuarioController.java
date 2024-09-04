@@ -1,6 +1,6 @@
 package com.dsi.tp.bonvino.Controllers;
 
-import com.dsi.tp.bonvino.Models.Usuario;
+import com.dsi.tp.bonvino.Entities.Usuario;
 import com.dsi.tp.bonvino.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

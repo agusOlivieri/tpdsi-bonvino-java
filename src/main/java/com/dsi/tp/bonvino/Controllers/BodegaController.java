@@ -1,6 +1,6 @@
 package com.dsi.tp.bonvino.Controllers;
 
-import com.dsi.tp.bonvino.Models.Bodega;
+import com.dsi.tp.bonvino.Entities.Bodega;
 import com.dsi.tp.bonvino.Repositories.BodegaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

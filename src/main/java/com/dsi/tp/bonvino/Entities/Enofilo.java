@@ -1,4 +1,4 @@
-package com.dsi.tp.bonvino.Models;
+package com.dsi.tp.bonvino.Entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,4 +30,14 @@ public class Enofilo {
     @ManyToOne
     @JoinColumn(name = "vino")
     private Vino vino;
+
+    // metodos
+
+    public String getNombreUsuario() {
+        return this.usuario.getNombre();
+    }
+
+    public boolean seguisABodega(Bodega bodega) {
+        return this.siguiendo.sosDeBodega(bodega);
+    }
 }

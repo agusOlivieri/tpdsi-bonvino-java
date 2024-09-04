@@ -1,4 +1,4 @@
-package com.dsi.tp.bonvino.Models;
+package com.dsi.tp.bonvino.Entities;
 
 
 import jakarta.persistence.*;
@@ -26,4 +26,8 @@ public class Siguiendo {
     @OneToOne
     @JoinColumn(name = "bodega_id")
     private Bodega bodega;
+
+    public boolean sosDeBodega(Bodega bod) {
+        return this.bodega.equals(bod);
+    }
 }

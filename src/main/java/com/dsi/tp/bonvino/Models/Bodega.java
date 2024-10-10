@@ -16,17 +16,17 @@ public class Bodega {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 100)
+    @Column(name="nombre", nullable = false)
     private String nombre;
 
-    @Column(length = 255)
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(length = 255)
+    @Column(name = "historia")
     private String historia;
 
     @Column(name = "periodo_actualizacion")
-    private Integer periodoActualizacion;
+    private int periodoActualizacion;
 
     @Column(name = "ultima_actualizacion")
     private LocalDateTime ultimaActualizacion;
@@ -64,11 +64,11 @@ public class Bodega {
         this.historia = historia;
     }
 
-    public Integer getPeriodoActualizacion() {
+    public int getPeriodoActualizacion() {
         return periodoActualizacion;
     }
 
-    public void setPeriodoActualizacion(Integer periodoActualizacion) {
+    public void setPeriodoActualizacion(int periodoActualizacion) {
         this.periodoActualizacion = periodoActualizacion;
     }
 

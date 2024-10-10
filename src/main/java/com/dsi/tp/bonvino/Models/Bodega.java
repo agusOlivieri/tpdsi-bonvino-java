@@ -6,6 +6,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import java.time.LocalDateTime;
 
 
@@ -79,5 +83,22 @@ public class Bodega {
     public void setUltimaActualizacion(LocalDateTime ultimaActualizacion) {
         this.ultimaActualizacion = ultimaActualizacion;
     }
+
+    public boolean estaParaActualizarVinos() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+
+        if (this.ultimaActualizacion == null) {
+            // Si nunca se ha actualizado, se puede actualizar de inmediato
+            return true;
+        }
+
+        // Calcular la próxima fecha de actualización sumando los meses del periodo de actualización a la última actualización
+        ZonedDateTime proximaActualizacion = this.ultimaActualizacion.atZone(ZoneId.of("UTC"))
+                .plusMonths(this.periodoActualizacion);
+
+        // Comparar la próxima fecha de actualización con la fecha actual
+        return now.isAfter(proximaActualizacion) || now.isEqual(proximaActualizacion);
+    }
+
 }
 

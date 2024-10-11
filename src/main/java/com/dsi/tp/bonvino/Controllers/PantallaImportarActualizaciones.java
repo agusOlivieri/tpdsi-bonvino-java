@@ -20,4 +20,9 @@ public class PantallaImportarActualizaciones {
     public List<String> opImportarActualizacionVinos() {
         return gestorImportarActualizaciones.opImportarActualizacionVinos();
     }
+
+//    public void tomarSeleccionBodega(String bodega) {
+//
+//    }
+
 }

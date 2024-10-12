@@ -3,9 +3,11 @@ package com.dsi.tp.bonvino.Controllers;
 import com.dsi.tp.bonvino.Models.Bodega;
 import com.dsi.tp.bonvino.Models.Maridaje;
 import com.dsi.tp.bonvino.Models.TipoUva;
+import com.dsi.tp.bonvino.Models.Varietal;
 import com.dsi.tp.bonvino.Services.BodegaService;
 import com.dsi.tp.bonvino.Services.MaridajeService;
 import com.dsi.tp.bonvino.Services.TipoUvaService;
+import com.dsi.tp.bonvino.Services.VarietalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,9 @@ public class GestorImportarActualizaciones {
 
     @Autowired
     private MaridajeService maridajeService;
+
+    @Autowired
+    private VarietalService varietalService;
 
     public List<String> opImportarActualizacionVinos() {
         return buscarBodegasParaActualizar();
@@ -54,5 +59,10 @@ public class GestorImportarActualizaciones {
     @GetMapping("/maridaje")
     public List<Maridaje> getAllMaridaje() {
         return maridajeService.getAll();
+    }
+
+    @GetMapping("/varietal")
+    public List<Varietal> getAllVarietal() {
+        return varietalService.getAll();
     }
 }

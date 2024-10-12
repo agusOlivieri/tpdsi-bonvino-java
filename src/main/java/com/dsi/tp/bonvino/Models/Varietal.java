@@ -1,6 +1,5 @@
 package com.dsi.tp.bonvino.Models;
 
-
 import jakarta.persistence.*;
 
 @Entity

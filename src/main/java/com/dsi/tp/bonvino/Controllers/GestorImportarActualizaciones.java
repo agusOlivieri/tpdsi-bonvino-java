@@ -1,7 +1,9 @@
 package com.dsi.tp.bonvino.Controllers;
 
+import com.dsi.tp.bonvino.Interfaces.InterfazApiBodega;
 import com.dsi.tp.bonvino.Models.*;
 import com.dsi.tp.bonvino.Services.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class GestorImportarActualizaciones {
@@ -27,6 +30,12 @@ public class GestorImportarActualizaciones {
     @Autowired
     private VinoService vinoService;
 
+    private final InterfazApiBodega interfazApiBodega;
+
+    public GestorImportarActualizaciones() {
+        this.interfazApiBodega = new InterfazApiBodega();
+    }
+
     public List<String> opImportarActualizacionVinos() {
         return buscarBodegasParaActualizar();
     }
@@ -42,6 +51,17 @@ public class GestorImportarActualizaciones {
             }
         }
         return bodegasParaActualizar;
+    }
+
+//    public List<Vino> tomarSeleccionBodega(String bodegaSeleccion) {
+//        List<Object> vinosParaActualizar = obtenerActualizacionVinosBodega();
+//
+//
+//    }
+
+    @GetMapping("/vinos")
+    public List<Object> obtenerActualizacionVinosBodega() {
+        return interfazApiBodega.obtenerActualizacionVinos();
     }
 
     @GetMapping("/tipouva")
@@ -63,4 +83,5 @@ public class GestorImportarActualizaciones {
     public List<Vino> getAllVino() {
         return vinoService.getAll();
     }
+
 }

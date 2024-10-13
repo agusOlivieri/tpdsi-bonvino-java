@@ -1,5 +1,6 @@
 package com.dsi.tp.bonvino.Models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,29 +9,37 @@ public class Vino {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonProperty("nombre")
     @Column(name = "nombre")
     private String nombre;
 
+    @JsonProperty("aniada")
     @Column(name = "añada")
     private int aniada;
 
+    @JsonProperty("imagenEtiqueta")
     @Column(name = "imagen_etiqueta")
     private String imagenEtiqueta;
 
+    @JsonProperty("notaDeCata")
     @Column(name = "nota_de_cata_bodega")
     private String notaDeCata;
 
+    @JsonProperty("precioARS")
     @Column(name = "precio_ars")
     private int precioARS;
 
+    @JsonProperty("bodega")
     @ManyToOne
     @JoinColumn(name = "bodega_id")
     private Bodega bodega;
 
+    @JsonProperty("maridaje")
     @ManyToOne
     @JoinColumn(name = "maridaje_id")
     private Maridaje maridaje;
 
+    @JsonProperty("varietal")
     @ManyToOne
     @JoinColumn(name = "varietal_id")
     private Varietal varietal;

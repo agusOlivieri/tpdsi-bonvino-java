@@ -1,0 +1,58 @@
+[
+  {
+    "nombre": "Vino Tinto Gran Enemigo",
+    "aniada": 2016,
+    "imagenEtiqueta": "imagenNuevaDeActualización",
+    "notaDeCata": "Intensos aromas a grosella negra y ciruela, con notas de pimienta negra y roble tostado. Final largo y elegante.",
+    "precioARS": 33210,
+    "bodega": 1,
+    "maridaje": 1,
+    "varietal": {
+      "descripcion": "Es más ligera que la cabernet sauvignon, y produce un luminoso y claro vino tinto que contribuye a la finura y deja un aroma a pimienta al mezclarse con uvas más robustas.",
+      "porcentajeComposicion": 84,
+      "tipoUva": 3
+    }
+  },
+  {
+    "nombre": "Vino Espumante Estrella",
+    "aniada": 2019,
+    "imagenEtiqueta": "imagenNuevaDeActualización2",
+    "notaDeCata": "Refrescante con aromas de manzana verde y cítricos, toques de vainilla y una textura cremosa. Equilibrado y suave.",
+    "precioARS": 35560,
+    "bodega": 1,
+    "maridaje": 3,
+    "varietal": {
+      "descripcion": "Espumante elegante con notas de miel y brioche.",
+      "porcentajeComposicion": 80,
+      "tipoUva": 5
+    }
+  },
+  {
+    "nombre": "Vino Tinto Roble Viejo",
+    "aniada": 2014,
+    "imagenEtiqueta": "imagenNuevaVinoCreado",
+    "notaDeCata": "Notas de vainilla y especias.",
+    "precioARS": 34000,
+    "bodega": 1,
+    "maridaje": 1,
+    "varietal": {
+      "descripcion": "Vino intenso con buen cuerpo.",
+      "porcentajeComposicion": 86,
+      "tipoUva": 5
+    }
+  },
+  {
+    "nombre": "Vino Tinto Tradicional",
+    "aniada": 2017,
+    "imagenEtiqueta": "imagenNueva10",
+    "notaDeCata": "Frutos rojos y especias.",
+    "precioARS": 33000,
+    "bodega": 1,
+    "maridaje": 2,
+    "varietal": {
+      "descripcion": "Vino bien estructurado y aromático.",
+      "porcentajeComposicion": 89,
+      "tipoUva": 4
+    }
+  }
+]

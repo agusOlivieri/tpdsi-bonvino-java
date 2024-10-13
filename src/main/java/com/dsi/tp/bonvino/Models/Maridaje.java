@@ -15,12 +15,12 @@ public class Maridaje {
     @Column(name = "descripcion")
     private String descripcion;
 
-    // metodos
-
-    public boolean esMaridaje(Maridaje mar) {
-        return this.equals(mar);
+    // Constructors
+    public Maridaje(Integer id) {
+        this.id = id;
     }
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -43,6 +43,11 @@ public class Maridaje {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    // metodos
+    public boolean esMaridaje(Maridaje mar) {
+        return this.equals(mar);
     }
 }
 

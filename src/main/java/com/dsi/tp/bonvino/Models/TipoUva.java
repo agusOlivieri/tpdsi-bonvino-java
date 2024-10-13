@@ -16,8 +16,12 @@ public class TipoUva {
     @Column(name="descripcion")
     private String descripcion;
 
-    // metodos
+    // Constructors
+    public TipoUva(Integer id) {
+        this.id = id;
+    }
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -42,6 +46,7 @@ public class TipoUva {
         this.descripcion = descripcion;
     }
 
+    // Metodos
     public boolean esTipoUva(TipoUva tipoUva) {
         return this.equals(tipoUva);
     }

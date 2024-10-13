@@ -35,6 +35,14 @@ public class Bodega {
     @Column(name = "ultima_actualizacion")
     private LocalDateTime ultimaActualizacion;
 
+    // Constructors
+    public Bodega() {
+    }
+
+    public Bodega(Integer id) {
+        this.id = id;
+    }
+
     // Getters y Setters
     public Integer getId() {
         return id;

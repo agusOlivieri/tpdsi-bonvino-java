@@ -18,9 +18,17 @@ public class Varietal {
     @JoinColumn(name = "tipouva_id")
     private TipoUva tipoUva;
 
+    // Constructors
     public Varietal() {
     }
 
+    public Varietal(String descripcion, int porcentajeComposicion, TipoUva tipoUva) {
+        this.descripcion = descripcion;
+        this.porcentajeComposicion = porcentajeComposicion;
+        this.tipoUva = tipoUva;
+    }
+
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -53,12 +61,7 @@ public class Varietal {
         this.descripcion = descripcion;
     }
 
-    public Varietal(String descripcion, int porcentajeComposicion, TipoUva tipoUva) {
-        this.descripcion = descripcion;
-        this.porcentajeComposicion = porcentajeComposicion;
-        this.tipoUva = tipoUva;
-    }
-
+    // Metodos
     public static Varietal newVarietal(String descripcion, int porcentajeComposicion, TipoUva tipoUva) {
         return new Varietal(descripcion, porcentajeComposicion, tipoUva);
     }

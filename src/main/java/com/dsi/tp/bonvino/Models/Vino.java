@@ -1,50 +1,54 @@
 package com.dsi.tp.bonvino.Models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "vino")
 public class Vino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonProperty("nombre")
     @Column(name = "nombre")
     private String nombre;
 
-    @JsonProperty("aniada")
     @Column(name = "añada")
     private int aniada;
 
-    @JsonProperty("imagenEtiqueta")
     @Column(name = "imagen_etiqueta")
     private String imagenEtiqueta;
 
-    @JsonProperty("notaDeCata")
     @Column(name = "nota_de_cata_bodega")
     private String notaDeCata;
 
-    @JsonProperty("precioARS")
     @Column(name = "precio_ars")
     private int precioARS;
 
-    @JsonProperty("bodega")
     @ManyToOne
     @JoinColumn(name = "bodega_id")
     private Bodega bodega;
 
-    @JsonProperty("maridaje")
     @ManyToOne
     @JoinColumn(name = "maridaje_id")
     private Maridaje maridaje;
 
-    @JsonProperty("varietal")
     @ManyToOne
     @JoinColumn(name = "varietal_id")
     private Varietal varietal;
 
+    // Constructors
     public Vino() {
+    }
+
+    public Vino(String nombre, int aniada, String imagenEtiqueta, String notaDeCata, int precioARS, Bodega bodega, Maridaje maridaje, Varietal varietal) {
+        this.nombre = nombre;
+        this.aniada = aniada;
+        this.imagenEtiqueta = imagenEtiqueta;
+        this.notaDeCata = notaDeCata;
+        this.precioARS = precioARS;
+        this.bodega = bodega;
+        this.maridaje = maridaje;
+        this.varietal = varietal;
     }
 
     public Integer getId() {
@@ -119,26 +123,18 @@ public class Vino {
         this.varietal = varietal;
     }
 
-    public Vino(int vintage, String imagen, String nombre, int precio, String notaDeCata,
-                Maridaje maridaje, Bodega bodega, String descVarietal, int porcentajeComp, TipoUva tipoUva) {
-
-        this.aniada = vintage;
-        this.imagenEtiqueta = imagen;
-        this.nombre = nombre;
-        this.precioARS = precio;
-        this.notaDeCata = notaDeCata;
-        this.maridaje = maridaje;
-        this.bodega = bodega;
-        this.varietal = Vino.crearVarietal(descVarietal, porcentajeComp, tipoUva);
-    }
-
     public static Varietal crearVarietal(String descVarietal, int porcentajeComp, TipoUva tipoUva) {
         return Varietal.newVarietal(descVarietal, porcentajeComp, tipoUva);
     }
 
-    public static Vino newVino(int vintage, String imagen, String nombre, int precio, String notaDeCata,
-                               Maridaje maridaje, Bodega bodega, String descVarietal, int porcentajeComp, TipoUva tipoUva) {
-        return new Vino(vintage, imagen, nombre, precio, notaDeCata, maridaje, bodega, descVarietal, porcentajeComp, tipoUva);
+    public static Vino newVino(String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+        // creamos el nuevo varietal
+        Varietal varietalNuevo = crearVarietal(desc_varietal, porc_composicion, tipoUva);
+
+        // creamos el nuevo vino
+        Vino nuevoVino = new Vino(nom, aniada, imagen, nota, precio, bodega, maridaje, varietalNuevo);
+
+        return nuevoVino;
     }
 
     public boolean esVinoParaActualizar(String nombre) {

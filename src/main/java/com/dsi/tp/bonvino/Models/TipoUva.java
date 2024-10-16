@@ -21,6 +21,9 @@ public class TipoUva {
         this.id = id;
     }
 
+    public TipoUva() {
+    }
+
     // Getters y Setters
     public Integer getId() {
         return id;
@@ -47,7 +50,7 @@ public class TipoUva {
     }
 
     // Metodos
-    public boolean esTipoUva(TipoUva tipoUva) {
-        return this.equals(tipoUva);
+    public boolean esTipoUva(int tipoUvaId) {
+        return this.id.equals(tipoUvaId);
     }
 }

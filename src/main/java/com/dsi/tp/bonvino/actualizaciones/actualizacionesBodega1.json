@@ -28,29 +28,29 @@
     }
   },
   {
-    "nombre": "Vino Tinto Roble Viejo",
-    "aniada": 2014,
+    "nombre": "Vino Blanco Viejo",
+    "aniada": 2016,
     "imagenEtiqueta": "imagenNuevaVinoCreado",
-    "notaDeCata": "Notas de vainilla y especias.",
+    "notaDeCata": "Notas de vainilla.",
     "precioARS": 34000,
     "bodega": 1,
     "maridaje": 1,
     "varietal": {
-      "descripcion": "Vino intenso con buen cuerpo.",
+      "descripcion": "Vino blanco intenso.",
       "porcentajeComposicion": 86,
       "tipoUva": 5
     }
   },
   {
-    "nombre": "Vino Tinto Tradicional",
-    "aniada": 2017,
-    "imagenEtiqueta": "imagenNueva10",
-    "notaDeCata": "Frutos rojos y especias.",
+    "nombre": "Vino Blanco Tradicional",
+    "aniada": 2012,
+    "imagenEtiqueta": "imagenNueva124",
+    "notaDeCata": "Arandonos y frutos azules.",
     "precioARS": 33000,
     "bodega": 1,
     "maridaje": 2,
     "varietal": {
-      "descripcion": "Vino bien estructurado y aromático.",
+      "descripcion": "Vino bien dulce y con aroma a frutos azules.",
       "porcentajeComposicion": 89,
       "tipoUva": 4
     }

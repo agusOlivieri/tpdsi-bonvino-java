@@ -16,7 +16,7 @@ public class PantallaImportarActualizaciones {
     @Autowired
     private GestorImportarActualizaciones gestorImportarActualizaciones;
 
-    @GetMapping("/actualizar")
+    @GetMapping("/actualizarrr")
     public List<String> opImportarActualizacionVinos() {
         List<String> bodegasParaActualizar = gestorImportarActualizaciones.opImportarActualizacionVinos();
 

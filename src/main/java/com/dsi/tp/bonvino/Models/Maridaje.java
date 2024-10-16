@@ -20,6 +20,9 @@ public class Maridaje {
         this.id = id;
     }
 
+    public Maridaje() {
+    }
+
     // Getters y Setters
     public Integer getId() {
         return id;
@@ -46,8 +49,8 @@ public class Maridaje {
     }
 
     // metodos
-    public boolean esMaridaje(Maridaje mar) {
-        return this.equals(mar);
+    public boolean esMaridaje(int marId) {
+        return this.id.equals(marId);
     }
 }
 

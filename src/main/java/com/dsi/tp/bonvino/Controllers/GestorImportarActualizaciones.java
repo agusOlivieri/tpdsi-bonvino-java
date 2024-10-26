@@ -148,54 +148,9 @@ public class GestorImportarActualizaciones implements ISujeto {
         return null;
     }
 
-//    @GetMapping("/seguidores")
-//    public List<String> notificarUsuarioSeguidores(@RequestParam String bodegaSeleccion) {
-//        List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
-//
-//        return seguidores;
-//    }
-
-//    public List<String> buscarSeguidoresBodega(String bodegaSeleccion) {
-//        List<Enofilo> enofilos = enofiloService.getAll();
-//        List<String> usuariosSeguidores = new ArrayList<>();
-//
-//        for(Enofilo enofilo : enofilos) {
-//            if (enofilo.seguisABodega(bodegaSeleccion)) {
-//                String nombreUsuarioSeguidor = enofilo.getNombreUsuario();
-//                usuariosSeguidores.add(nombreUsuarioSeguidor);
-//            }
-//        }
-//        return usuariosSeguidores;
-//    }
-
     @GetMapping("/vinos")
     public List<Object> obtenerActualizacionVinosBodega(@RequestParam String bodegaSeleccion) {
         return interfazApiBodega.obtenerActualizacionVinos(bodegaSeleccion);
-    }
-
-    @GetMapping("/tipouva")
-    public List<TipoUva> getAllTipoUva() {
-        return tipoUvaService.getAll();
-    }
-
-    @GetMapping("/maridaje")
-    public List<Maridaje> getAllMaridaje() {
-        return maridajeService.getAll();
-    }
-
-    @GetMapping("/varietal")
-    public List<Varietal> getAllVarietal() {
-        return varietalService.getAll();
-    }
-
-    @GetMapping("/vino")
-    public List<Vino> getAllVino() {
-        return vinoService.getAll();
-    }
-
-    @GetMapping("/enofilos")
-    public List<Enofilo> getAllEnofilo() {
-        return enofiloService.getAll();
     }
 
     @Override

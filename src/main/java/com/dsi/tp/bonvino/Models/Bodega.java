@@ -1,5 +1,6 @@
 package com.dsi.tp.bonvino.Models;
 
+import com.dsi.tp.bonvino.Services.BodegaService;
 import com.dsi.tp.bonvino.Services.VarietalService;
 import com.dsi.tp.bonvino.Services.VinoService;
 import jakarta.persistence.Column;
@@ -141,6 +142,11 @@ public class Bodega {
         Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, bodega, maridaje, desc_varietal, porc_composicion, tipoUva);
 
         return nuevoVino;
+    }
+
+    public void actualizarUltimaFecha(BodegaService bodegaService) {
+        this.ultimaActualizacion = LocalDateTime.now();
+        bodegaService.actualizarFecha(this);
     }
 }
 

@@ -108,6 +108,10 @@ public class GestorImportarActualizaciones {
                 }
             }
         }
+        if(!vinosImportados.isEmpty()) {
+            bod.actualizarUltimaFecha(bodegaService);
+            System.out.println("Fecha de última actualización actualizada.");
+        }
 
         return vinosImportados;
     }

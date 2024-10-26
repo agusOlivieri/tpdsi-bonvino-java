@@ -21,4 +21,8 @@ public class BodegaService {
         Optional<Bodega> bodega = bodegaRepository.findByNombre(nombre);
         return bodega.orElse(null);
     }
+
+    public void actualizarFecha(Bodega bodega) {
+        bodegaRepository.save(bodega);
+    }
 }

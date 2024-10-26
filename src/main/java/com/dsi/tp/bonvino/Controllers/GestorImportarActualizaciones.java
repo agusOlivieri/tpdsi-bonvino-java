@@ -56,7 +56,6 @@ public class GestorImportarActualizaciones {
 //
 //    }
 
-    @GetMapping("/actualizar")
     public List<Vino> actualizarOCrearVinos(@RequestParam String bodegaSeleccion) {
         List<Object> actualizaciones = obtenerActualizacionVinosBodega();
         Bodega bod = bodegaService.getByNombre(bodegaSeleccion);

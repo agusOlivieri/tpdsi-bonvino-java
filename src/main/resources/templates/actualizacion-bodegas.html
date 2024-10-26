@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.css}" href="../static/css/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" th:href="@{/css/actualizacion-bodegas.css}" href="../static/css/actualizacion-bodegas.css"/>
+    <script th:src="@{/js/jquery.js}" src="../static/js/jquery.js"></script>
+    <script th:src="@{/js/bootstrap.js}" src="../static/js/bootstrap.js"></script>
+
+    <title>Actualizaciones bodegas</title>
+
+   </head>
+<body style="background-color: #F4EBE4;">
+  
+    <header class="p-4 text-white" id="topheader">
+      
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">    
+                 
+            <ul class="nav col-12 col-lg-center me-lg-center justify-content-center mb-md-0">
+              
+              <li><a href="#" class="nav-link px-6  text-white ">Bodegas</a></li>
+              <a href="/"><img th:src="@{/img/bonvinologo1.png}" src="../static/img/bonvinologo1.png" alt="Bonvino" width="70"></a>
+              <li><a href="#" class="nav-link px-6 text-white">Usuarios</a></li>
+
+            </ul>
+          </div>
+    </header>
+
+    <div class="container m-5">
+      <h3>Lista de bodegas para actualizar</h3>
+      <div class="container col-8">
+        <table class="table m-4 table-bordered table-hover">
+          <thead class="thead-dark ">
+              <th scope="col">Bodega</th>
+              <th scope="col">Ultima Actualizacion</th>
+              <th scope="col">Acción</th>
+          </thead>
+          <tbody class="table-group-divider table-divider-color">
+            <tr th:each="bodega, iterStat : ${bodegas}">
+              <td th:text="${iterStat.index +1}"></td>
+              <td th:text="${bodega}"></td>
+                <td>
+                    <a class="btn btn-outline-dark" th:href="@{/actualizar/{bodega}(bodega=${bodega})}">
+                        Actualizar
+                    </a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+    </div>
+
+
+</body>
+</html>

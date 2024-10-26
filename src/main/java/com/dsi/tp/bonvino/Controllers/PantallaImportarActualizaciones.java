@@ -1,34 +1,42 @@
 package com.dsi.tp.bonvino.Controllers;
 
-import com.dsi.tp.bonvino.Services.BodegaService;
+import com.dsi.tp.bonvino.Models.Vino;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
 
-import com.dsi.tp.bonvino.Controllers.GestorImportarActualizaciones;
-
+import java.util.Collection;
 import java.util.List;
 
-@RestController
+@Controller
 public class PantallaImportarActualizaciones {
     @Autowired
     private GestorImportarActualizaciones gestorImportarActualizaciones;
 
-    @GetMapping("/actualizarrr")
-    public List<String> opImportarActualizacionVinos() {
+    @GetMapping("/actualizacion-bodegas")
+    public String opImportarActualizacionVinos(Model model) {
         List<String> bodegasParaActualizar = gestorImportarActualizaciones.opImportarActualizacionVinos();
 
-        return mostrarBodegasParaActualizar(bodegasParaActualizar);
+        return mostrarBodegasParaActualizar(bodegasParaActualizar, model);
     }
 
     @GetMapping("/actualizar/{nombreBodega}")
-    public void tomarSeleccionBodega(@PathVariable String nombreBodega) {
+    public Collection<Vino> tomarSeleccionBodega(@PathVariable String nombreBodega) {
+        List<Vino> vinosImportados = gestorImportarActualizaciones.actualizarOCrearVinos(nombreBodega);
 
+        return vinosImportados;
     }
 
-    public List<String> mostrarBodegasParaActualizar(List<String> bodegasParaActualizar) {
-        return bodegasParaActualizar;
+    public String mostrarBodegasParaActualizar(List<String> bodegasParaActualizar, Model model) {
+
+        model.addAttribute("bodegas", bodegasParaActualizar);
+        return "actualizacion-bodegas";
+    }
+
+    @GetMapping("/")
+    public String index() {
+        return "index";
     }
 }

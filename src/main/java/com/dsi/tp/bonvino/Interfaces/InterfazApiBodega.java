@@ -10,12 +10,15 @@ import java.util.List;
 
 public class InterfazApiBodega {
 
-    private static final String RUTA_ARCHIVO_JSON = "src/main/java/com/dsi/tp/bonvino/actualizaciones/actualizacionesBodega1.json";
+    private static final String RUTA_BASE_ARCHIVO_JSON = "src/main/java/com/dsi/tp/bonvino/actualizaciones/";
 
     // Método para obtener todas las actualizaciones de vinos
-    public List<Object> obtenerActualizacionVinos() {
+    public List<Object> obtenerActualizacionVinos(String bodegaSeleccion) {
+
         ObjectMapper mapper = new ObjectMapper();
         List<Object> data = null;
+
+        String RUTA_ARCHIVO_JSON = RUTA_BASE_ARCHIVO_JSON + "actualizaciones" + bodegaSeleccion.replaceAll(" ", "") + ".json";
 
         try {
             // Leer el archivo JSON y mapearlo a una lista de objetos Vino

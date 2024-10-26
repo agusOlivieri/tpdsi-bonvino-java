@@ -49,9 +49,8 @@ public class GestorImportarActualizaciones {
         return bodegasParaActualizar;
     }
 
-    @GetMapping("/actualizar")
-    public List<Vino> tomarSeleccionBodega(@RequestParam String bodegaSeleccion) {
-        List<Object> actualizaciones = obtenerActualizacionVinosBodega();
+    public List<Vino> tomarSeleccionBodega(String bodegaSeleccion) {
+        List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
 
         List<Vino> vinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
 
@@ -136,8 +135,8 @@ public class GestorImportarActualizaciones {
     }
 
     @GetMapping("/vinos")
-    public List<Object> obtenerActualizacionVinosBodega() {
-        return interfazApiBodega.obtenerActualizacionVinos();
+    public List<Object> obtenerActualizacionVinosBodega(@RequestParam String bodegaSeleccion) {
+        return interfazApiBodega.obtenerActualizacionVinos(bodegaSeleccion);
     }
 
     @GetMapping("/tipouva")

@@ -1,5 +1,6 @@
 package com.dsi.tp.bonvino.Controllers;
 
+import com.dsi.tp.bonvino.Models.Vino;
 import com.dsi.tp.bonvino.Services.BodegaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,8 +25,10 @@ public class PantallaImportarActualizaciones {
     }
 
     @GetMapping("/actualizar/{nombreBodega}")
-    public void tomarSeleccionBodega(@PathVariable String nombreBodega) {
+    public List<Vino> tomarSeleccionBodega(@PathVariable String nombreBodega) {
+        List<Vino> resumenVinosActualizados = gestorImportarActualizaciones.tomarSeleccionBodega(nombreBodega);
 
+        return resumenVinosActualizados;
     }
 
     public List<String> mostrarBodegasParaActualizar(List<String> bodegasParaActualizar) {

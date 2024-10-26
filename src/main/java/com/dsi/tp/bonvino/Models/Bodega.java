@@ -1,5 +1,6 @@
 package com.dsi.tp.bonvino.Models;
 
+import com.dsi.tp.bonvino.Services.VarietalService;
 import com.dsi.tp.bonvino.Services.VinoService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -120,23 +121,24 @@ public class Bodega {
             if(vino.esVinoParaActualizar(nombreVinoActualizarOCrear)) {
                 return vino;
             }
-
-            continue;
         }
-
         return null;
     }
 
-    public Vino actualizarDatosVino(Vino vino, int precio, String imagen, String nota) {
+    public Vino actualizarDatosVino(VinoService vinoService, Vino vino, int precio, String imagen, String nota) {
+        // seteamos los datos nuevos
         vino.setPrecioARS(precio);
         vino.setImagenEtiqueta(imagen);
         vino.setNotaDeCata(nota);
 
+        // persistimos el vino actualizado
+        vinoService.save(vino);
+
         return vino;
     }
 
-    public Vino crearVino(String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
-        Vino nuevoVino = newVino(nom, aniada, imagen, nota, precio, bodega, maridaje, desc_varietal, porc_composicion, tipoUva);
+    public Vino crearVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+        Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, bodega, maridaje, desc_varietal, porc_composicion, tipoUva);
 
         return nuevoVino;
     }

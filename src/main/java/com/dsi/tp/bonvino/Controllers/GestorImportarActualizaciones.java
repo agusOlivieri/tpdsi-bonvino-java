@@ -41,7 +41,6 @@ public class GestorImportarActualizaciones {
         List<Bodega> bodegas = bodegaService.getAll();
         List<String> bodegasParaActualizar = new ArrayList<>();
 
-        System.out.println(bodegas);
         for(Bodega bodega : bodegas) {
             if (bodega.estaParaActualizarVinos()) {
             bodegasParaActualizar.add(bodega.getNombre());
@@ -50,15 +49,16 @@ public class GestorImportarActualizaciones {
         return bodegasParaActualizar;
     }
 
-//    public List<Vino> tomarSeleccionBodega(String bodegaSeleccion) {
-//
-//
-//
-//    }
-
     @GetMapping("/actualizar")
-    public List<Vino> actualizarOCrearVinos(@RequestParam String bodegaSeleccion) {
+    public List<Vino> tomarSeleccionBodega(@RequestParam String bodegaSeleccion) {
         List<Object> actualizaciones = obtenerActualizacionVinosBodega();
+
+        List<Vino> vinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
+
+        return vinosImportados;
+    }
+
+    public List<Vino> actualizarOCrearVinos(String bodegaSeleccion, List<Object> actualizaciones) {
         Bodega bod = bodegaService.getByNombre(bodegaSeleccion);
         List<Vino> vinosImportados = new ArrayList<>();
 
@@ -74,23 +74,26 @@ public class GestorImportarActualizaciones {
 
                 Vino vinoParaActualizar = bod.esVinoParaActualizar(vinoService, nombreVinoParaActualizarCrear);
 
-                if(vinoParaActualizar != null) {
+                if(vinoParaActualizar != null) { // <-- actualizar vino
+                    // recuperamos los datos para actualizar
                     int precioParaActualizar = (int) actualizacionMap.get("precioARS");
                     String notaParaActualizar = (String) actualizacionMap.get("notaDeCata");
                     String imagenParaActualizar = (String) actualizacionMap.get("imagenEtiqueta");
 
-                    Vino vinoActualizado = bod.actualizarDatosVino(vinoParaActualizar, precioParaActualizar, imagenParaActualizar, notaParaActualizar);
+                    Vino vinoActualizado = bod.actualizarDatosVino(vinoService, vinoParaActualizar, precioParaActualizar, imagenParaActualizar, notaParaActualizar);
                     vinosImportados.add(vinoActualizado);
                     System.out.println("Vino actualizado: " + vinoActualizado.getNombre());
-                } else {
-                    // controlamos si existen el maridaje y tipo de uva en nuestra base de datos
+                } else { // <-- crear vino
+                    // recuperamos los datos de maridaje y tipoUva de las actualizaciones
                     int maridajeEnListaDeActualizaciones = (int) actualizacionMap.get("maridaje");
                     int tipouvaEnListaDeActualizaciones = (int) varietalMap.get("tipoUva");
 
+                    // controlamos si existen el maridaje y tipo de uva en nuestra base de datos
                     Maridaje maridaje = buscarMaridaje(maridajeEnListaDeActualizaciones);
                     TipoUva tipoUva = buscarTipoUva(tipouvaEnListaDeActualizaciones);
 
                     if(maridaje != null && tipoUva != null) { // si existen el maridaje y el tipo de uva, creamos el vino
+                        // recuperamos los datos para crear el vino
                         int aniadaParaCrear = (int) actualizacionMap.get("aniada");
                         String imagenParaCrear = (String) actualizacionMap.get("imagenEtiqueta");
                         String notaParaCrear = (String) actualizacionMap.get("notaDeCata");
@@ -98,7 +101,7 @@ public class GestorImportarActualizaciones {
                         String descVarietalParaCrear = (String) varietalMap.get("descripcion");
                         int porcComposicionParaCrear = (int) varietalMap.get("porcentajeComposicion");
 
-                        Vino vinoCreado = bod.crearVino(nombreVinoParaActualizarCrear, aniadaParaCrear, imagenParaCrear, notaParaCrear, precioParaCrear, bod, maridaje, descVarietalParaCrear, porcComposicionParaCrear, tipoUva);
+                        Vino vinoCreado = bod.crearVino(varietalService, vinoService, nombreVinoParaActualizarCrear, aniadaParaCrear, imagenParaCrear, notaParaCrear, precioParaCrear, bod, maridaje, descVarietalParaCrear, porcComposicionParaCrear, tipoUva);
                         vinosImportados.add(vinoCreado);
                         System.out.println("Vino creado: " + vinoCreado.getNombre());
 

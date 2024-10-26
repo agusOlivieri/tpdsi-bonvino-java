@@ -1,5 +1,6 @@
 package com.dsi.tp.bonvino.Models;
 
+import com.dsi.tp.bonvino.Services.VarietalService;
 import jakarta.persistence.*;
 
 @Entity
@@ -62,8 +63,13 @@ public class Varietal {
     }
 
     // Metodos
-    public static Varietal newVarietal(String descripcion, int porcentajeComposicion, TipoUva tipoUva) {
-        return new Varietal(descripcion, porcentajeComposicion, tipoUva);
+    public static Varietal newVarietal(VarietalService varietalService, String descripcion, int porcentajeComposicion, TipoUva tipoUva) {
+        // creamos en varietal
+        Varietal nuevoVarietal = new Varietal(descripcion, porcentajeComposicion, tipoUva);
+        // persistimos el nuevo varietal en la BD
+        varietalService.newVarietal(nuevoVarietal);
+
+        return nuevoVarietal;
     }
 }
 

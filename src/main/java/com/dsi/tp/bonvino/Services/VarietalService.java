@@ -2,6 +2,7 @@ package com.dsi.tp.bonvino.Services;
 
 import com.dsi.tp.bonvino.Models.Varietal;
 import com.dsi.tp.bonvino.Repositories.VarietalRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,4 +14,9 @@ public class VarietalService {
     private VarietalRepository varietalRepository;
 
     public List<Varietal> getAll() { return varietalRepository.findAll(); }
+
+    @Transactional
+    public void newVarietal(Varietal nuevoVarietal) {
+        varietalRepository.save(nuevoVarietal);
+    }
 }

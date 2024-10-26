@@ -60,8 +60,8 @@ public class Siguiendo {
     }
 
     // Métodos
-    public boolean sosDeBodega(Bodega bod) {
-        return this.bodega.equals(bod);
+    public boolean sosDeBodega(String bod) {
+        return this.bodega.getNombre().equals(bod);
     }
 }
 

@@ -1,6 +1,9 @@
 package com.dsi.tp.bonvino.Controllers;
 
+import com.dsi.tp.bonvino.Interfaces.IObservadorNotif;
+import com.dsi.tp.bonvino.Interfaces.ISujeto;
 import com.dsi.tp.bonvino.Interfaces.InterfazApiBodega;
+import com.dsi.tp.bonvino.Interfaces.InterfazNotificacionPush;
 import com.dsi.tp.bonvino.Models.*;
 import com.dsi.tp.bonvino.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class GestorImportarActualizaciones {
+public class GestorImportarActualizaciones implements ISujeto {
     @Autowired
     private BodegaService bodegaService;
 
@@ -27,10 +30,15 @@ public class GestorImportarActualizaciones {
     @Autowired
     private VinoService vinoService;
 
+    @Autowired
+    private EnofiloService enofiloService;
+
     private final InterfazApiBodega interfazApiBodega;
+    private final InterfazNotificacionPush interfazNotificacionPush;
 
     public GestorImportarActualizaciones() {
         this.interfazApiBodega = new InterfazApiBodega();
+        this.interfazNotificacionPush = new InterfazNotificacionPush();
     }
 
     public List<String> opImportarActualizacionVinos() {
@@ -53,6 +61,8 @@ public class GestorImportarActualizaciones {
         List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
 
         List<Vino> vinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
+
+        String mensaje = notificarUsuariosSeguidores(bodegaSeleccion);
 
         return vinosImportados;
     }
@@ -138,6 +148,26 @@ public class GestorImportarActualizaciones {
         return null;
     }
 
+//    @GetMapping("/seguidores")
+//    public List<String> notificarUsuarioSeguidores(@RequestParam String bodegaSeleccion) {
+//        List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
+//
+//        return seguidores;
+//    }
+
+//    public List<String> buscarSeguidoresBodega(String bodegaSeleccion) {
+//        List<Enofilo> enofilos = enofiloService.getAll();
+//        List<String> usuariosSeguidores = new ArrayList<>();
+//
+//        for(Enofilo enofilo : enofilos) {
+//            if (enofilo.seguisABodega(bodegaSeleccion)) {
+//                String nombreUsuarioSeguidor = enofilo.getNombreUsuario();
+//                usuariosSeguidores.add(nombreUsuarioSeguidor);
+//            }
+//        }
+//        return usuariosSeguidores;
+//    }
+
     @GetMapping("/vinos")
     public List<Object> obtenerActualizacionVinosBodega(@RequestParam String bodegaSeleccion) {
         return interfazApiBodega.obtenerActualizacionVinos(bodegaSeleccion);
@@ -163,4 +193,60 @@ public class GestorImportarActualizaciones {
         return vinoService.getAll();
     }
 
+    @GetMapping("/enofilos")
+    public List<Enofilo> getAllEnofilo() {
+        return enofiloService.getAll();
+    }
+
+    @Override
+    public void suscribir(IObservadorNotif obs) {
+        observadores.add(obs);
+    }
+
+    @Override
+    public void quitar(IObservadorNotif obs) {
+        observadores.remove(obs);
+    }
+
+    @Override
+    public String notificar(String texto, List<String> seguidores) {
+        String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(texto, seguidores);
+        return mensaje;
+    }
+
+    @Override
+    public List<String> buscarSeguidoresBodega(String bodegaSeleccion) {
+        List<Enofilo> enofilos = enofiloService.getAll();
+        List<String> usuariosSeguidores = new ArrayList<>();
+
+        for(Enofilo enofilo : enofilos) {
+            if (enofilo.seguisABodega(bodegaSeleccion)) {
+                String nombreUsuarioSeguidor = enofilo.getNombreUsuario();
+                usuariosSeguidores.add(nombreUsuarioSeguidor);
+            }
+        }
+        return usuariosSeguidores;
+    }
+
+    @Override
+    public String notificarUsuariosSeguidores(String bodegaSeleccion) { // <-- implementación del patrón observer
+        List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
+        List<IObservadorNotif> interfaces = new ArrayList<>();
+        String texto = "Últimas novedades de vinos en esta bodega!!";
+
+        // creamos la interfaz de notificacion push
+        InterfazNotificacionPush interfazNotificacionPush = new InterfazNotificacionPush();
+
+        // agregamos a la lista de interfaces para suscribir
+        interfaces.add(interfazNotificacionPush);
+
+        // suscribimos las interfaces creadas
+        for(IObservadorNotif obs : interfaces) {
+            suscribir(obs);
+        }
+
+        // notificamos
+        String mensaje = notificar(texto, seguidores);
+        return mensaje;
+    }
 }

@@ -96,7 +96,7 @@ public class Enofilo {
         return this.usuario.getNombre();
     }
 
-    public boolean seguisABodega(Bodega bodega) {
+    public boolean seguisABodega(String bodega) {
         return this.siguiendo.sosDeBodega(bodega);
     }
 }

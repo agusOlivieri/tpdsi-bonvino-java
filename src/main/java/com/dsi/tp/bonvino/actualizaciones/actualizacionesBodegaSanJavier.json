@@ -33,7 +33,7 @@
     "imagenEtiqueta": "imagenNuevaVinoCreado",
     "notaDeCata": "Notas de vainilla.",
     "precioARS": 34000,
-    "bodega": 1,
+    "bodega": 2,
     "maridaje": 1,
     "varietal": {
       "descripcion": "Vino blanco intenso.",
@@ -47,7 +47,7 @@
     "imagenEtiqueta": "imagenNueva124",
     "notaDeCata": "Arandonos y frutos azules.",
     "precioARS": 33000,
-    "bodega": 1,
+    "bodega": 3,
     "maridaje": 2,
     "varietal": {
       "descripcion": "Vino bien dulce y con aroma a frutos azules.",

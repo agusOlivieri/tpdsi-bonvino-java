@@ -41,7 +41,7 @@
               <td th:text="${iterStat.index +1}"></td>
               <td th:text="${bodega}"></td>
                 <td>
-                    <a class="btn btn-outline-dark" th:href="@{/actualizar/{bodega}(bodega=${bodega})}">
+                    <a class="btn btn-outline-dark" th:href="@{/actualizar?bodegaSeleccion={bodega}(bodega=${bodega})}">
                         Actualizar
                     </a>
                 </td>

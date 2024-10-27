@@ -26,10 +26,6 @@ public class Enofilo {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "vino_id")
-    private Vino vino;
-
     // Constructors
     public Enofilo() {
     }
@@ -83,13 +79,6 @@ public class Enofilo {
         this.usuario = usuario;
     }
 
-    public Vino getVino() {
-        return vino;
-    }
-
-    public void setVino(Vino vino) {
-        this.vino = vino;
-    }
 
     // Métodos
     public String getNombreUsuario() {

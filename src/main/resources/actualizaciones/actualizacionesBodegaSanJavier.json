@@ -1,0 +1,58 @@
+[
+  {
+    "nombre": "Vino Tinto Gran Enemigo",
+    "aniada": 2016,
+    "imagenEtiqueta": "imagenNuevaDeActualización",
+    "notaDeCata": "Intensos aromas a grosella negra y ciruela, con notas de pimienta negra y roble tostado. Final largo y elegante.",
+    "precioARS": 30000,
+    "bodega": 1,
+    "maridaje": 1,
+    "varietal": {
+      "descripcion": "Es más ligera que la cabernet sauvignon, y produce un luminoso y claro vino tinto que contribuye a la finura y deja un aroma a pimienta al mezclarse con uvas más robustas.",
+      "porcentajeComposicion": 84,
+      "tipoUva": 3
+    }
+  },
+  {
+    "nombre": "Vino Espumante Estrella",
+    "aniada": 2019,
+    "imagenEtiqueta": "imagenNuevaDeActualización2",
+    "notaDeCata": "Refrescante con aromas de manzana verde y cítricos, toques de vainilla y una textura cremosa. Equilibrado y suave.",
+    "precioARS": 20000,
+    "bodega": 1,
+    "maridaje": 3,
+    "varietal": {
+      "descripcion": "Espumante elegante con notas de miel y brioche.",
+      "porcentajeComposicion": 80,
+      "tipoUva": 5
+    }
+  },
+  {
+    "nombre": "Vino Blanco Viejo",
+    "aniada": 2016,
+    "imagenEtiqueta": "imagenNuevaVinoCreado",
+    "notaDeCata": "Notas de vainilla.",
+    "precioARS": 34000,
+    "bodega": 2,
+    "maridaje": 1,
+    "varietal": {
+      "descripcion": "Vino blanco intenso.",
+      "porcentajeComposicion": 86,
+      "tipoUva": 5
+    }
+  },
+  {
+    "nombre": "Vino Blanco Tradicional",
+    "aniada": 2012,
+    "imagenEtiqueta": "imagenNueva124",
+    "notaDeCata": "Arandonos y frutos azules.",
+    "precioARS": 33000,
+    "bodega": 3,
+    "maridaje": 2,
+    "varietal": {
+      "descripcion": "Vino bien dulce y con aroma a frutos azules.",
+      "porcentajeComposicion": 89,
+      "tipoUva": 4
+    }
+  }
+]

@@ -1,0 +1,28 @@
+body {
+    background-color: #E7E1CF;
+}
+
+#topheader {
+    background-color: #280001;
+}
+
+li {
+    padding-left: 100px;
+    padding-right: 100px;
+    font-size: 22px;
+}
+
+tr {
+    
+    font-size: 15px;
+    letter-spacing: 1.2px;  
+}
+
+thead {
+    background-color: #280001;
+}
+
+.btn {
+    border: 2px
+}
+

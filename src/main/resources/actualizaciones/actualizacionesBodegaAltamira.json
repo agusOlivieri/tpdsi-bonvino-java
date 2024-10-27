@@ -1,0 +1,44 @@
+[
+  {
+    "nombre": "Vino Rubio del Sol",
+    "aniada": 2018,
+    "imagenEtiqueta": "imagenNueva2",
+    "notaDeCata": "Aromas cítricos y florales",
+    "precioARS": 20000,
+    "bodega": 3,
+    "maridaje": 2,
+    "varietal": {
+      "descripcion": "Vino fresco con toques de manzana verde y pera.",
+      "porcentajeComposicion": 90,
+      "tipoUva": 8
+    }
+  },
+  {
+    "nombre": "Vino Tinto Reserva",
+    "aniada": 2015,
+    "imagenEtiqueta": "imagenNueva5",
+    "notaDeCata": "Cuerpo completo con notas de cereza y roble.",
+    "precioARS": 32000,
+    "bodega": 3,
+    "maridaje": 2,
+    "varietal": {
+      "descripcion": "Vino con taninos suaves y final prolongado.",
+      "porcentajeComposicion": 88,
+      "tipoUva": 2
+    }
+  },
+  {
+    "nombre": "Vino Rosado del Valle",
+    "aniada": 2021,
+    "imagenEtiqueta": "imagenNueva8",
+    "notaDeCata": "Fresco con toques de cítricos.",
+    "precioARS": 26000,
+    "bodega": 3,
+    "maridaje": 2,
+    "varietal": {
+      "descripcion": "Vino rosado brillante y aromático.",
+      "porcentajeComposicion": 93,
+      "tipoUva": 17
+    }
+  }
+]

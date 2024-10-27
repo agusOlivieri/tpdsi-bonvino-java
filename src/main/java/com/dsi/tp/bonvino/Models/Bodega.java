@@ -1,12 +1,23 @@
 package com.dsi.tp.bonvino.Models;
 
+import com.dsi.tp.bonvino.Services.BodegaService;
+import com.dsi.tp.bonvino.Services.VarietalService;
+import com.dsi.tp.bonvino.Services.VinoService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.dsi.tp.bonvino.Models.Vino.newVino;
 
 
 @Entity
@@ -30,6 +41,14 @@ public class Bodega {
 
     @Column(name = "ultima_actualizacion")
     private LocalDateTime ultimaActualizacion;
+
+    // Constructors
+    public Bodega() {
+    }
+
+    public Bodega(Integer id) {
+        this.id = id;
+    }
 
     // Getters y Setters
     public Integer getId() {
@@ -78,6 +97,56 @@ public class Bodega {
 
     public void setUltimaActualizacion(LocalDateTime ultimaActualizacion) {
         this.ultimaActualizacion = ultimaActualizacion;
+    }
+
+    public boolean estaParaActualizarVinos() {
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
+
+        if (this.ultimaActualizacion == null) {
+            // Si nunca se ha actualizado, se puede actualizar de inmediato
+            return true;
+        }
+
+        // Calcular la próxima fecha de actualización sumando los meses del periodo de actualización a la última actualización
+        ZonedDateTime proximaActualizacion = this.ultimaActualizacion.atZone(ZoneId.of("UTC"))
+                .plusMonths(this.periodoActualizacion);
+
+        // Comparar la próxima fecha de actualización con la fecha actual
+        return now.isAfter(proximaActualizacion) || now.isEqual(proximaActualizacion);
+    }
+
+    public Vino esVinoParaActualizar(VinoService vinoService, String nombreVinoActualizarOCrear) {
+        List<Vino> vinosDeBodegaSeleccion = vinoService.getAllFromBodega(this);
+
+        for(Vino vino : vinosDeBodegaSeleccion) {
+            if(vino.esVinoParaActualizar(nombreVinoActualizarOCrear)) {
+                return vino;
+            }
+        }
+        return null;
+    }
+
+    public Vino actualizarDatosVino(VinoService vinoService, Vino vino, int precio, String imagen, String nota) {
+        // seteamos los datos nuevos
+        vino.setPrecioARS(precio);
+        vino.setImagenEtiqueta(imagen);
+        vino.setNotaDeCata(nota);
+
+        // persistimos el vino actualizado
+        vinoService.save(vino);
+
+        return vino;
+    }
+
+    public Vino crearVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+        Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, bodega, maridaje, desc_varietal, porc_composicion, tipoUva);
+
+        return nuevoVino;
+    }
+
+    public void actualizarUltimaFecha(BodegaService bodegaService) {
+        this.ultimaActualizacion = LocalDateTime.now();
+        bodegaService.actualizarFecha(this);
     }
 }
 

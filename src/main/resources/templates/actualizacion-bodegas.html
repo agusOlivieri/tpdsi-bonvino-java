@@ -11,7 +11,7 @@
     <title>Actualizaciones bodegas</title>
 
    </head>
-<body style="background-color: #F4EBE4;">
+<body>
   
     <header class="p-4 text-white" id="topheader">
       
@@ -28,16 +28,16 @@
     </header>
 
     <div class="container m-5">
-      <h3>Lista de bodegas para actualizar</h3>
+      <h3 class="mb-4">Lista de bodegas para actualizar</h3>
       <div class="container col-8">
-        <table class="table m-4 table-bordered table-hover">
-          <thead class="thead-dark ">
+        <table class="table m-4 table-bordered table-hover table-dark">
+          <thead class="thead-dark">
               <th scope="col">Bodega</th>
               <th scope="col">Ultima Actualizacion</th>
               <th scope="col">Acción</th>
           </thead>
           <tbody class="table-group-divider table-divider-color">
-            <tr th:each="bodega, iterStat : ${bodegas}">
+            <tr th:each="bodega, iterStat : ${bodegas}" class="table-secondary">
               <td th:text="${iterStat.index +1}"></td>
               <td th:text="${bodega}"></td>
                 <td>

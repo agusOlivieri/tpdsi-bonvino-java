@@ -5,6 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-
+<div class="container col-8">
+    <table class="table m-4 table-bordered table-hover table-dark">
+        <thead class="thead-dark">
+        <th scope="col">Nombre</th>
+        <th scope="col">Añada</th>
+        <th scope="col">Precio</th>
+        </thead>
+        <tbody class="table-group-divider table-divider-color">
+        <tr th:each="vino : ${vinos}" class="table-secondary">
+            <td th:text="${vino.nombre}"></td>
+            <td th:text="${vino.aniada}"></td>
+            <td th:text="${vino.precioARS}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

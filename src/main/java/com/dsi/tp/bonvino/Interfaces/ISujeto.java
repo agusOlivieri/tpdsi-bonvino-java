@@ -13,7 +13,4 @@ public interface ISujeto {
 
     String notificar(String texto, List<String> seguidores);
 
-    List<String> buscarSeguidoresBodega(String bodegaSeleccion);
-
-    String notificarUsuariosSeguidores(String bodegaSeleccion);
 }

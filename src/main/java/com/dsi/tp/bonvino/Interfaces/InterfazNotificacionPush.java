@@ -12,7 +12,7 @@ public class InterfazNotificacionPush implements IObservadorNotif{
         return "Los seguidores de esta bodega fueron notificados de las novedades con exito!";
     }
 
-    public boolean notificarEnofilo(String texto, String enofilo) {
+    public boolean notificarEnofilo(String texto, String enofilo) { // <-- faltan parametros
         // Lógica para notificar a los enofilos
         return true;
     }

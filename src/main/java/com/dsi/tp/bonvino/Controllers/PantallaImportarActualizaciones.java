@@ -28,7 +28,7 @@ public class PantallaImportarActualizaciones {
 
     @GetMapping("/actualizar")
     public String tomarSeleccionBodega(@RequestParam String bodegaSeleccion, Model model) {
-        List<Vino> resumenVinosActualizados = gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion);
+        List<Vino> resumenVinosActualizados = gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion); // <-- tiene que retornar una lista de diccionarios (datos de vinos actualizados)
 
         return mostrarResumenVinosImportados(resumenVinosActualizados, model);
     }

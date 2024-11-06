@@ -8,17 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.ZonedDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.dsi.tp.bonvino.Models.Vino.newVino;
-
 
 @Entity
 public class Bodega {
@@ -138,9 +135,8 @@ public class Bodega {
         return vino;
     }
 
-    public Vino crearVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
-        Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, bodega, maridaje, desc_varietal, porc_composicion, tipoUva);
-
+    public Vino crearVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+        Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, this, maridaje, desc_varietal, porc_composicion, tipoUva);
         return nuevoVino;
     }
 

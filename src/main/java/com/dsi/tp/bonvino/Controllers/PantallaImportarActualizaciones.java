@@ -14,7 +14,12 @@ public class PantallaImportarActualizaciones {
     @Autowired
     private GestorImportarActualizaciones gestorImportarActualizaciones;
 
-    @GetMapping("/actualizacion-bodegas")
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/actualizacion-bodegas") // <-- No me gusta el endpoint
     public String opImportarActualizacionVinos(Model model) {
         List<String> bodegasParaActualizar = gestorImportarActualizaciones.opImportarActualizacionVinos();
 
@@ -34,10 +39,6 @@ public class PantallaImportarActualizaciones {
         return "actualizacion-bodegas";
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 
     public String mostrarResumenVinosImportados(List<Vino> resumenVinosImportados, Model model) {
         model.addAttribute("vinos", resumenVinosImportados);

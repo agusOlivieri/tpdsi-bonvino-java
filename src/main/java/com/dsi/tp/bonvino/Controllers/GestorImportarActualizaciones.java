@@ -51,7 +51,8 @@ public class GestorImportarActualizaciones implements ISujeto {
 
         for(Bodega bodega : bodegas) {
             if (bodega.estaParaActualizarVinos()) {
-            bodegasParaActualizar.add(bodega.getNombre());
+                String nombreBodega = bodega.getNombre();
+            bodegasParaActualizar.add(nombreBodega);
             }
         }
         return bodegasParaActualizar;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PantallaImportarActualizaciones {
@@ -28,9 +29,9 @@ public class PantallaImportarActualizaciones {
 
     @GetMapping("/actualizar")
     public String tomarSeleccionBodega(@RequestParam String bodegaSeleccion, Model model) {
-        List<Vino> resumenVinosActualizados = gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion); // <-- tiene que retornar una lista de diccionarios (datos de vinos actualizados)
+        List<Map<String, Object>> resumenVinosImportados = gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion); // <-- tiene que retornar una lista de diccionarios (datos de vinos actualizados)
 
-        return mostrarResumenVinosImportados(resumenVinosActualizados, model);
+        return mostrarResumenVinosImportados(resumenVinosImportados, model);
     }
 
     public String mostrarBodegasParaActualizar(List<String> bodegasParaActualizar, Model model) {
@@ -40,7 +41,7 @@ public class PantallaImportarActualizaciones {
     }
 
 
-    public String mostrarResumenVinosImportados(List<Vino> resumenVinosImportados, Model model) {
+    public String mostrarResumenVinosImportados(List<Map<String, Object>> resumenVinosImportados, Model model) {
         model.addAttribute("vinos", resumenVinosImportados);
         return "vinos-importados";
     }

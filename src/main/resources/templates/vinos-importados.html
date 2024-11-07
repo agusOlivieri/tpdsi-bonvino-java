@@ -11,12 +11,16 @@
         <th scope="col">Nombre</th>
         <th scope="col">Añada</th>
         <th scope="col">Precio</th>
+        <th scope="col">Etiqueta</th>
         </thead>
         <tbody class="table-group-divider table-divider-color">
         <tr th:each="vino : ${vinos}" class="table-secondary">
-            <td th:text="${vino.nombre}"></td>
-            <td th:text="${vino.aniada}"></td>
-            <td th:text="${vino.precioARS}"></td>
+            <td th:text="${vino['nombre']}">Nombre</td>
+            <td th:text="${vino['aniada']}">Añada</td>
+            <td th:text="'$' + ${vino['precio']}">Precio</td>
+            <td> <!-- mostrar imagen etiqueta -->
+                <img th:src="${vino['imagenEtiqueta']}" alt="Etiqueta de vino" width="100" height="150" />
+            </td>
         </tr>
         </tbody>
     </table>

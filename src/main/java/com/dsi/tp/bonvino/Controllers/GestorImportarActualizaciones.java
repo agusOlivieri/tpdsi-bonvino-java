@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,8 +46,16 @@ public class GestorImportarActualizaciones implements ISujeto {
         this.interfazNotificacionPush = new InterfazNotificacionPush();
     }
 
-    public List<String> opImportarActualizacionVinos() {
-        return buscarBodegasParaActualizar();
+    private PantallaImportarActualizaciones pantallaImportarActualizaciones;
+
+    public void setPantallaImportarActualizaciones(PantallaImportarActualizaciones pantallaImportarActualizaciones) {
+        this.pantallaImportarActualizaciones = pantallaImportarActualizaciones;
+    }
+
+    public String opImportarActualizacionVinos(Model model) {
+        List<String> bodegasParaActualizar = buscarBodegasParaActualizar();
+
+        return pantallaImportarActualizaciones.mostrarBodegasParaActualizar(bodegasParaActualizar, model);
     }
 
     public List<String> buscarBodegasParaActualizar() {
@@ -61,19 +71,20 @@ public class GestorImportarActualizaciones implements ISujeto {
         return bodegasParaActualizar;
     }
 
-    public List<Vino> tomarSeleccionBodega(String bodegaSeleccion) {
+    public String tomarSeleccionBodega(String bodegaSeleccion, Model model) {
         List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
 
-        List<Vino> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones); // <-- tiene que retornar una lista de Map<String, String>
+        List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones); // <-- tiene que retornar una lista de Map<String, String>
 
         String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- método de enganche
 
-        return resumenVinosImportados; // <-- averiguar como retornar la lista de vinos y el mensaje de enofilos notificados
+        return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model); // <-- averiguar como retornar la lista de vinos y el mensaje de enofilos notificados
     }
 
-    public List<Vino> actualizarOCrearVinos(String bodegaSeleccion, List<Object> actualizaciones) {
+    public List<Map<String, Object>> actualizarOCrearVinos(String bodegaSeleccion, List<Object> actualizaciones) {
         Bodega bod = bodegaService.getByNombre(bodegaSeleccion);
         List<Vino> vinosImportados = new ArrayList<>();
+        List<Map<String, Object>> resumenVinosImportados = new ArrayList<>();
 
         for(Object actualizacion : actualizaciones) {
             if(actualizacion instanceof Map) {
@@ -122,14 +133,24 @@ public class GestorImportarActualizaciones implements ISujeto {
                 }
             }
         }
-        if(!vinosImportados.isEmpty()) {
+
+        if(!vinosImportados.isEmpty()) { // Si se importaron vinos actualizamos la fecha de la bodega y creamos el resumen
             bod.actualizarUltimaFecha(bodegaService);
             System.out.println("Fecha de última actualización actualizada.");
+
+            for (Vino vino : vinosImportados) {
+                Map<String, Object> vinoMap = new HashMap<>();
+                vinoMap.put("nombre", vino.getNombre());
+                vinoMap.put("aniada", vino.getAniada());
+                vinoMap.put("precio", vino.getPrecioARS());
+                vinoMap.put("imagenEtiqueta", vino.getImagenEtiqueta());
+
+                resumenVinosImportados.add(vinoMap);
+            }
+
         }
 
-        // crear otra lista con el resumen de vinos importados (nombre, añada, precio y la imagen de etiqueta)
-
-        return vinosImportados;
+        return resumenVinosImportados;
     }
 
     public Maridaje buscarMaridaje(int mar) {

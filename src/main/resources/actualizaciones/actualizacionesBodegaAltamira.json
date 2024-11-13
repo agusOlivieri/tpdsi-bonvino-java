@@ -2,7 +2,7 @@
   {
     "nombre": "Vino Rubio del Sol",
     "aniada": 2018,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=76",
+    "imagenEtiqueta": "https://picsum.photos/100/150?random=24",
     "notaDeCata": "Aromas cítricos y florales",
     "precioARS": 20000,
     "bodega": 3,
@@ -16,7 +16,7 @@
   {
     "nombre": "Vino Tinto Reserva",
     "aniada": 2015,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=76",
+    "imagenEtiqueta": "https://picsum.photos/100/150?random=53",
     "notaDeCata": "Cuerpo completo con notas de cereza y roble.",
     "precioARS": 32000,
     "bodega": 3,

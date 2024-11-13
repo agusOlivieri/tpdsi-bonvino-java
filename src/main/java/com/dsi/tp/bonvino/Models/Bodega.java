@@ -112,9 +112,7 @@ public class Bodega {
         return now.isAfter(proximaActualizacion) || now.isEqual(proximaActualizacion);
     }
 
-    public Vino esVinoParaActualizar(VinoService vinoService, String nombreVinoActualizarOCrear) {
-        List<Vino> vinosDeBodegaSeleccion = vinoService.getAllFromBodega(this);
-
+    public Vino esVinoParaActualizar(List<Vino> vinosDeBodegaSeleccion, String nombreVinoActualizarOCrear) {
         for(Vino vino : vinosDeBodegaSeleccion) {
             if(vino.esVinoParaActualizar(nombreVinoActualizarOCrear)) {
                 return vino;
@@ -123,26 +121,22 @@ public class Bodega {
         return null;
     }
 
-    public Vino actualizarDatosVino(VinoService vinoService, Vino vino, int precio, String imagen, String nota) {
+    public Vino actualizarDatosVino(Vino vino, int precio, String imagen, String nota) {
         // seteamos los datos nuevos
         vino.setPrecioARS(precio);
         vino.setImagenEtiqueta(imagen);
         vino.setNotaDeCata(nota);
 
-        // persistimos el vino actualizado
-        vinoService.save(vino);
-
         return vino;
     }
 
-    public Vino crearVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
-        Vino nuevoVino = newVino(varietalService, vinoService, nom, aniada, imagen, nota, precio, this, maridaje, desc_varietal, porc_composicion, tipoUva);
+    public Vino crearVino(VarietalService varietalService, String nom, int aniada, String imagen, String nota, int precio, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+        Vino nuevoVino = newVino(varietalService, nom, aniada, imagen, nota, precio, this, maridaje, desc_varietal, porc_composicion, tipoUva);
         return nuevoVino;
     }
 
-    public void actualizarUltimaFecha(BodegaService bodegaService) {
-        this.ultimaActualizacion = LocalDateTime.now();
-        bodegaService.actualizarFecha(this);
+    public void actualizarUltimaFecha() {
+        this.setUltimaActualizacion(LocalDateTime.now());
     }
 }
 

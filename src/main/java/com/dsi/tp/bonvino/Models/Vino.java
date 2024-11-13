@@ -125,19 +125,17 @@ public class Vino {
         this.varietal = varietal;
     }
 
-    public static Varietal crearVarietal(VarietalService varietalService, String descVarietal, int porcentajeComp, TipoUva tipoUva) {
-        return Varietal.newVarietal(varietalService, descVarietal, porcentajeComp, tipoUva);
+    public static Varietal crearVarietal(String descVarietal, int porcentajeComp, TipoUva tipoUva) {
+        return Varietal.newVarietal(descVarietal, porcentajeComp, tipoUva);
     }
 
-    public static Vino newVino(VarietalService varietalService, VinoService vinoService, String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
+    public static Vino newVino(VarietalService varietalService, String nom, int aniada, String imagen, String nota, int precio, Bodega bodega, Maridaje maridaje, String desc_varietal, int porc_composicion, TipoUva tipoUva) {
         // creamos el nuevo varietal
-        Varietal varietalNuevo = crearVarietal(varietalService, desc_varietal, porc_composicion, tipoUva);
+        Varietal varietalNuevo = crearVarietal(desc_varietal, porc_composicion, tipoUva);
+        varietalService.save(varietalNuevo);
 
         // creamos el nuevo vino
         Vino nuevoVino = new Vino(nom, aniada, imagen, nota, precio, bodega, maridaje, varietalNuevo);
-
-        // persistimos el vino en la BD
-        vinoService.save(nuevoVino);
 
         return nuevoVino;
     }

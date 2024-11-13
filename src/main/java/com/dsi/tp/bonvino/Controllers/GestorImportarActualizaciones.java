@@ -40,13 +40,12 @@ public class GestorImportarActualizaciones implements ISujeto {
 
     private final InterfazApiBodega interfazApiBodega;
     private final InterfazNotificacionPush interfazNotificacionPush;
+    private PantallaImportarActualizaciones pantallaImportarActualizaciones;
 
     public GestorImportarActualizaciones() {
         this.interfazApiBodega = new InterfazApiBodega();
         this.interfazNotificacionPush = new InterfazNotificacionPush();
     }
-
-    private PantallaImportarActualizaciones pantallaImportarActualizaciones;
 
     public void setPantallaImportarActualizaciones(PantallaImportarActualizaciones pantallaImportarActualizaciones) {
         this.pantallaImportarActualizaciones = pantallaImportarActualizaciones;

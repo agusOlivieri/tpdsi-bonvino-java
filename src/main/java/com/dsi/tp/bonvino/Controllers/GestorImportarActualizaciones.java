@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,34 +24,68 @@ public class GestorImportarActualizaciones implements ISujeto {
     private BodegaService bodegaService;
 
     @Autowired
-    private TipoUvaService tipoUvaService;
-
-    @Autowired
-    private MaridajeService maridajeService;
-
-    @Autowired
     private VarietalService varietalService;
 
     @Autowired
     private VinoService vinoService;
 
-    @Autowired
-    private EnofiloService enofiloService;
-
     private final InterfazApiBodega interfazApiBodega;
     private final InterfazNotificacionPush interfazNotificacionPush;
+    private PantallaImportarActualizaciones pantallaImportarActualizaciones;
+
+    private List<Bodega> bodegas;
+    private List<Maridaje> maridajes;
+    private List<TipoUva> tipoUvas;
+    private List<Enofilo> enofilos;
 
     public GestorImportarActualizaciones() {
         this.interfazApiBodega = new InterfazApiBodega();
         this.interfazNotificacionPush = new InterfazNotificacionPush();
     }
 
-    public List<String> opImportarActualizacionVinos() {
-        return buscarBodegasParaActualizar();
+    public void setPantallaImportarActualizaciones(PantallaImportarActualizaciones pantallaImportarActualizaciones) {
+        this.pantallaImportarActualizaciones = pantallaImportarActualizaciones;
+    }
+
+    public List<Bodega> getBodegas() {
+        return bodegas;
+    }
+
+    public void setBodegas(List<Bodega> bodegas) {
+        this.bodegas = bodegas;
+    }
+
+    public List<Maridaje> getMaridajes() {
+        return maridajes;
+    }
+
+    public void setMaridajes(List<Maridaje> maridajes) {
+        this.maridajes = maridajes;
+    }
+
+    public List<TipoUva> getTipoUvas() {
+        return tipoUvas;
+    }
+
+    public void setTipoUvas(List<TipoUva> tipoUvas) {
+        this.tipoUvas = tipoUvas;
+    }
+
+    public List<Enofilo> getEnofilos() {
+        return enofilos;
+    }
+
+    public void setEnofilos(List<Enofilo> enofilos) {
+        this.enofilos = enofilos;
+    }
+
+    public String opImportarActualizacionVinos(Model model) {
+        List<String> bodegasParaActualizar = buscarBodegasParaActualizar();
+
+        return pantallaImportarActualizaciones.mostrarBodegasParaActualizar(bodegasParaActualizar, model);
     }
 
     public List<String> buscarBodegasParaActualizar() {
-        List<Bodega> bodegas = bodegaService.getAll();
         List<String> bodegasParaActualizar = new ArrayList<>();
 
         for(Bodega bodega : bodegas) {
@@ -62,18 +97,19 @@ public class GestorImportarActualizaciones implements ISujeto {
         return bodegasParaActualizar;
     }
 
-    public List<Map<String, Object>> tomarSeleccionBodega(String bodegaSeleccion) {
+    public String tomarSeleccionBodega(String bodegaSeleccion, Model model) {
         List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
 
         List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones); // <-- tiene que retornar una lista de Map<String, String>
 
-        String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- metodo de enganche
+        String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- método de enganche
 
-        return resumenVinosImportados; // <-- averiguar como retornar la lista de vinos y el mensaje de enofilos notificados
+        return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model); // <-- averiguar como retornar la lista de vinos y el mensaje de enofilos notificados
     }
 
     public List<Map<String, Object>> actualizarOCrearVinos(String bodegaSeleccion, List<Object> actualizaciones) {
         Bodega bod = bodegaService.getByNombre(bodegaSeleccion);
+        List<Vino> vinosDeBodegaSeleccion = vinoService.getAllFromBodega(bod);
         List<Vino> vinosImportados = new ArrayList<>();
         List<Map<String, Object>> resumenVinosImportados = new ArrayList<>();
 
@@ -87,7 +123,7 @@ public class GestorImportarActualizaciones implements ISujeto {
 
                 String nombreVinoParaActualizarCrear = (String) actualizacionMap.get("nombre");
 
-                Vino vinoParaActualizar = bod.esVinoParaActualizar(vinoService, nombreVinoParaActualizarCrear);
+                Vino vinoParaActualizar = bod.esVinoParaActualizar(vinosDeBodegaSeleccion, nombreVinoParaActualizarCrear);
 
                 if(vinoParaActualizar != null) { // <-- actualizar vino
                     // recuperamos los datos para actualizar
@@ -95,7 +131,9 @@ public class GestorImportarActualizaciones implements ISujeto {
                     String notaParaActualizar = (String) actualizacionMap.get("notaDeCata");
                     String imagenParaActualizar = (String) actualizacionMap.get("imagenEtiqueta");
 
-                    Vino vinoActualizado = bod.actualizarDatosVino(vinoService, vinoParaActualizar, precioParaActualizar, imagenParaActualizar, notaParaActualizar);
+                    Vino vinoActualizado = bod.actualizarDatosVino(vinoParaActualizar, precioParaActualizar, imagenParaActualizar, notaParaActualizar);
+                    vinoService.save(vinoActualizado);
+
                     vinosImportados.add(vinoActualizado);
                     System.out.println("Vino actualizado: " + vinoActualizado.getNombre());
                 } else { // <-- crear vino
@@ -116,35 +154,38 @@ public class GestorImportarActualizaciones implements ISujeto {
                         String descVarietalParaCrear = (String) varietalMap.get("descripcion");
                         int porcComposicionParaCrear = (int) varietalMap.get("porcentajeComposicion");
 
-                        Vino vinoCreado = bod.crearVino(varietalService, vinoService, nombreVinoParaActualizarCrear, aniadaParaCrear, imagenParaCrear, notaParaCrear, precioParaCrear, maridaje, descVarietalParaCrear, porcComposicionParaCrear, tipoUva);
+                        Vino vinoCreado = bod.crearVino(varietalService, nombreVinoParaActualizarCrear, aniadaParaCrear, imagenParaCrear, notaParaCrear, precioParaCrear, maridaje, descVarietalParaCrear, porcComposicionParaCrear, tipoUva);
+                        vinoService.save(vinoCreado);
+
                         vinosImportados.add(vinoCreado);
                         System.out.println("Vino creado: " + vinoCreado.getNombre());
-
                     }
                 }
             }
         }
-        if(!vinosImportados.isEmpty()) { // Si se importaron vinos actualizamos la fechaUltimaActualizacion de la bodega y creamos el resumen
-            bod.actualizarUltimaFecha(bodegaService);
+
+        if(!vinosImportados.isEmpty()) { // Si se importaron vinos actualizamos la fecha de la bodega y creamos el resumen
+            bod.actualizarUltimaFecha();
+            bodegaService.save(bod);
+
             System.out.println("Fecha de última actualización actualizada.");
 
-             for (Vino vino : vinosImportados) {
-                 Map<String, Object> vinoMap = new HashMap<>();
-                 vinoMap.put("nombre", vino.getNombre());
-                 vinoMap.put("aniada", vino.getAniada());
-                 vinoMap.put("precio", vino.getPrecioARS());
-                 vinoMap.put("imagenEtiqueta", vino.getImagenEtiqueta());
+            for (Vino vino : vinosImportados) {
+                Map<String, Object> vinoMap = new HashMap<>();
+                vinoMap.put("nombre", vino.getNombre());
+                vinoMap.put("aniada", vino.getAniada());
+                vinoMap.put("precio", vino.getPrecioARS());
+                vinoMap.put("imagenEtiqueta", vino.getImagenEtiqueta());
 
-                 resumenVinosImportados.add(vinoMap);
-             }
+                resumenVinosImportados.add(vinoMap);
+            }
+
         }
-        // Retornar el resumen de vinos importados, si no hubieron actualizaciones retorna la lista vacia
+
         return resumenVinosImportados;
     }
 
     public Maridaje buscarMaridaje(int mar) {
-        List<Maridaje> maridajes = maridajeService.getAll();
-
         for(Maridaje maridaje : maridajes) {
             if(maridaje.esMaridaje(mar)) {
                 return maridaje;
@@ -154,9 +195,7 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     public TipoUva buscarTipoUva(int tipouva) {
-        List<TipoUva> tipouvas = tipoUvaService.getAll();
-
-        for(TipoUva tipo : tipouvas) {
+        for(TipoUva tipo : tipoUvas) {
             if(tipo.esTipoUva(tipouva)) {
                 return tipo;
             }
@@ -192,7 +231,6 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     public List<String> buscarSeguidoresBodega(String bodegaSeleccion) {
-        List<Enofilo> enofilos = enofiloService.getAll();
         List<String> usuariosSeguidores = new ArrayList<>();
 
         for(Enofilo enofilo : enofilos) {

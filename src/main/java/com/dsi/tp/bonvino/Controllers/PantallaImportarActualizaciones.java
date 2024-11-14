@@ -12,8 +12,12 @@ import java.util.Map;
 
 @Controller
 public class PantallaImportarActualizaciones {
-    @Autowired
+
     private GestorImportarActualizaciones gestorImportarActualizaciones;
+
+    public void setGestorImportarActualizaciones(GestorImportarActualizaciones gestorImportarActualizaciones) {
+        this.gestorImportarActualizaciones = gestorImportarActualizaciones;
+    }
 
     @GetMapping("/")
     public String index() {
@@ -22,16 +26,12 @@ public class PantallaImportarActualizaciones {
 
     @GetMapping("/actualizacion-bodegas") // <-- No me gusta el endpoint
     public String opImportarActualizacionVinos(Model model) {
-        List<String> bodegasParaActualizar = gestorImportarActualizaciones.opImportarActualizacionVinos();
-
-        return mostrarBodegasParaActualizar(bodegasParaActualizar, model);
+        return gestorImportarActualizaciones.opImportarActualizacionVinos(model);
     }
 
     @GetMapping("/actualizar")
     public String tomarSeleccionBodega(@RequestParam String bodegaSeleccion, Model model) {
-        List<Map<String, Object>> resumenVinosImportados = gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion); // <-- tiene que retornar una lista de diccionarios (datos de vinos actualizados)
-
-        return mostrarResumenVinosImportados(resumenVinosImportados, model);
+        return gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion, model);
     }
 
     public String mostrarBodegasParaActualizar(List<String> bodegasParaActualizar, Model model) {

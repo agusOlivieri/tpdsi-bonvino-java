@@ -16,7 +16,7 @@ public class VarietalService {
     public List<Varietal> getAll() { return varietalRepository.findAll(); }
 
     @Transactional
-    public void newVarietal(Varietal nuevoVarietal) {
+    public void save(Varietal nuevoVarietal) {
         varietalRepository.save(nuevoVarietal);
     }
 }

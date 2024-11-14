@@ -28,28 +28,35 @@
     </header>
 
     <div class="container m-5">
-      <h3 class="mb-4">Lista de bodegas para actualizar</h3>
-      <div class="container col-8">
-        <table class="table m-4 table-bordered table-hover table-dark">
-          <thead class="thead-dark">
-              <th scope="col">Bodega</th>
-              <th scope="col">Ultima Actualizacion</th>
-              <th scope="col">Acción</th>
-          </thead>
-          <tbody class="table-group-divider table-divider-color">
-            <tr th:each="bodega, iterStat : ${bodegas}" class="table-secondary">
-              <td th:text="${iterStat.index +1}"></td>
-              <td th:text="${bodega}"></td>
-                <td>
-                    <a class="btn btn-outline-dark" th:href="@{/actualizar?bodegaSeleccion={bodega}(bodega=${bodega})}">
-                        Actualizar
-                    </a>
-                </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    
+        <h3 class="mb-4">Lista de bodegas para actualizar</h3>
+        <div th:if="${mensaje}">
+            <div class="alert alert-info" role="alert">
+                <p th:text="${mensaje}"></p>
+            </div>
+            <a href="/" class="btn btn-dark">Volver</a>
+        </div>
+        <div th:if="${!#lists.isEmpty(bodegas)}" class="container col-8">
+            <table class="table m-4 table-bordered table-hover table-dark">
+              <thead class="thead-dark">
+                  <th scope="col">Bodega</th>
+                  <th scope="col">Ultima Actualizacion</th>
+                  <th scope="col">Acción</th>
+              </thead>
+              <tbody class="table-group-divider table-divider-color">
+                <tr th:each="bodega, iterStat : ${bodegas}" class="table-secondary">
+                  <td th:text="${iterStat.index +1}"></td>
+                  <td th:text="${bodega}"></td>
+                    <td>
+                        <a class="btn btn-dark" th:href="@{/actualizar?bodegaSeleccion={bodega}(bodega=${bodega})}">
+                            Actualizar
+                        </a>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="/" class="btn btn-dark">Volver</a>
+
+        </div>
     </div>
 
 

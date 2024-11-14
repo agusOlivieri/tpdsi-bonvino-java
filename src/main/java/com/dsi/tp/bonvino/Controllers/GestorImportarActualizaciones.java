@@ -206,12 +206,7 @@ public class GestorImportarActualizaciones implements ISujeto {
     @GetMapping("/vinos")
     public List<Object> obtenerActualizacionVinosBodega(@RequestParam String bodegaSeleccion) {
         List<Object> actualizaciones = interfazApiBodega.obtenerActualizacionVinos(bodegaSeleccion);
-
-        if (actualizaciones == null) {
-            throw new ActualizacionNoDisponibleException("Error de conexión con servicio externo de bodegas");
-        }
-
-        return actualizaciones; // <-- implementar una validación en caso de que no retorne nada.
+        return actualizaciones;
     }
 
     @Override

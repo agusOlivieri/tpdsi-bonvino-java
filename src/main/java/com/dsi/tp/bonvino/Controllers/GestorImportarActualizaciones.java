@@ -124,7 +124,7 @@ public class GestorImportarActualizaciones implements ISujeto {
                 }
             }
         }
-        if(!vinosImportados.isEmpty()) { // Si se importaron vinos actualizamos la fecha de la bodega y creamos el resumen
+        if(!vinosImportados.isEmpty()) { // Si se importaron vinos actualizamos la fechaUltimaActualizacion de la bodega y creamos el resumen
             bod.actualizarUltimaFecha(bodegaService);
             System.out.println("Fecha de última actualización actualizada.");
 
@@ -137,11 +137,8 @@ public class GestorImportarActualizaciones implements ISujeto {
 
                  resumenVinosImportados.add(vinoMap);
              }
-
         }
-
-        // crear otra lista con el resumen de vinos importados (nombre, añada, precio y la imagen de etiqueta)
-
+        // Retornar el resumen de vinos importados, si no hubieron actualizaciones retorna la lista vacia
         return resumenVinosImportados;
     }
 

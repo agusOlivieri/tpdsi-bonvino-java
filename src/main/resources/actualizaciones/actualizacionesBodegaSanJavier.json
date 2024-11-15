@@ -2,7 +2,7 @@
   {
     "nombre": "Vino Tinto Gran Enemigo",
     "aniada": 2016,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=54",
+    "imagenEtiqueta": "/img/etiqueta-vina-albali.jpg",
     "notaDeCata": "Intensos aromas a grosella negra y ciruela, con notas de pimienta negra y roble tostado. Final largo y elegante.",
     "precioARS": 30001,
     "bodega": 1,
@@ -16,7 +16,7 @@
   {
     "nombre": "Vino Espumante Estrella",
     "aniada": 2019,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=88",
+    "imagenEtiqueta": "/img/etiqueta-vina-albali.jpg",
     "notaDeCata": "Refrescante con aromas de manzana verde y cítricos, toques de vainilla y una textura cremosa. Equilibrado y suave.",
     "precioARS": 20000,
     "bodega": 1,
@@ -30,7 +30,7 @@
   {
     "nombre": "Vino Blanco Viejo",
     "aniada": 2016,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=11",
+    "imagenEtiqueta": "/img/etiqueta-vina-albali.jpg",
     "notaDeCata": "Notas de vainilla.",
     "precioARS": 34000,
     "bodega": 2,
@@ -44,13 +44,13 @@
   {
     "nombre": "Vino Blanco Tradicional",
     "aniada": 2012,
-    "imagenEtiqueta": "https://picsum.photos/100/150?random=20",
+    "imagenEtiqueta": "/img/etiqueta-vina-albali.jpg",
     "notaDeCata": "Arandonos y frutos azules.",
     "precioARS": 33000,
     "bodega": 3,
     "maridaje": 2,
     "varietal": {
-      "descripcion": "Vino bien dulce y con aroma a frutos azules.",
+      "descripcion": "/img/etiqueta-vina-albali.jpg",
       "porcentajeComposicion": 89,
       "tipoUva": 4
     }

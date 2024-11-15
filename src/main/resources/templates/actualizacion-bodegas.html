@@ -12,13 +12,13 @@
 
    </head>
 <body>
-  
+
     <header class="p-4 text-white" id="topheader">
-      
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">    
-                 
+
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-center">
+
             <ul class="nav col-12 col-lg-center me-lg-center justify-content-center mb-md-0">
-              
+
               <li><a href="#" class="nav-link px-6  text-white ">Bodegas</a></li>
               <a href="/"><img th:src="@{/img/bonvinologo1.png}" src="../static/img/bonvinologo1.png" alt="Bonvino" width="70"></a>
               <li><a href="#" class="nav-link px-6 text-white">Usuarios</a></li>
@@ -28,24 +28,23 @@
     </header>
 
     <div class="container m-5">
-        <h3 class="mb-4">Lista de bodegas para actualizar</h3>
-        <div th:if="${mensaje}">
+        <h3 class="mb-4" th:if="${mensaje == null}">Lista de bodegas para actualizar</h3>
+        <h3 class="mb-4" th:if="${mensaje != null}">Estas al día</h3>
+        <div class="mb-4" th:if="${mensaje}">
             <div class="alert alert-info" role="alert">
                 <p th:text="${mensaje}"></p>
             </div>
             <a href="/" class="btn btn-dark">Volver</a>
         </div>
-        <div th:if="${!#lists.isEmpty(bodegas)}" class="container col-8">
+        <div th:if="${!#lists.isEmpty(bodegas)}" class="container mb-4 col-8">
             <table class="table m-4 table-bordered table-hover table-dark">
               <thead class="thead-dark">
-                  <th scope="col">Bodega</th>
-                  <th scope="col">Ultima Actualizacion</th>
-                  <th scope="col">Acción</th>
+                <th scope="col">Bodega</th>
+                <th scope="col">Acción</th>
               </thead>
               <tbody class="table-group-divider table-divider-color">
                 <tr th:each="bodega, iterStat : ${bodegas}" class="table-secondary">
-                  <td th:text="${iterStat.index +1}"></td>
-                  <td th:text="${bodega}"></td>
+                    <td th:text="${bodega}"></td>
                     <td>
                         <a class="btn btn-dark" th:href="@{/actualizar?bodegaSeleccion={bodega}(bodega=${bodega})}">
                             Actualizar
@@ -54,8 +53,9 @@
                 </tr>
               </tbody>
             </table>
-            <a href="/" class="btn btn-dark">Volver</a>
-
+            <div class="m-4">
+                <a href="/" class="btn btn-dark">Volver</a>
+            </div>
         </div>
     </div>
 

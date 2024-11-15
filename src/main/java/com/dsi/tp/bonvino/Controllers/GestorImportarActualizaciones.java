@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class GestorImportarActualizaciones implements ISujeto {
@@ -86,6 +83,7 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     public List<String> buscarBodegasParaActualizar() {
+        List<Bodega> bodegas = bodegaService.getAll();
         List<String> bodegasParaActualizar = new ArrayList<>();
 
         for(Bodega bodega : bodegas) {
@@ -98,13 +96,18 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     public String tomarSeleccionBodega(String bodegaSeleccion, Model model) {
-        List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
+        try {
+            List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
+            List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
+            String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- método de enganche
 
-        List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones); // <-- tiene que retornar una lista de Map<String, String>
+            model.addAttribute("mensajeError", null); // No hay error, así que enviamos null
+            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model);
 
-        String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- método de enganche
-
-        return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model); // <-- averiguar como retornar la lista de vinos y el mensaje de enofilos notificados
+        } catch (ActualizacionNoDisponibleException ex) {
+            model.addAttribute("mensajeError", ex.getMessage());
+            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(Collections.emptyList(), model);
+        }
     }
 
     public List<Map<String, Object>> actualizarOCrearVinos(String bodegaSeleccion, List<Object> actualizaciones) {
@@ -206,6 +209,12 @@ public class GestorImportarActualizaciones implements ISujeto {
     @GetMapping("/vinos")
     public List<Object> obtenerActualizacionVinosBodega(@RequestParam String bodegaSeleccion) {
         List<Object> actualizaciones = interfazApiBodega.obtenerActualizacionVinos(bodegaSeleccion);
+
+        if (actualizaciones == null || actualizaciones.isEmpty()) {
+            // Si no hay actualizaciones, lanzar una excepción
+            throw new ActualizacionNoDisponibleException("Error en la conexión con la bodega");
+        }
+
         return actualizaciones;
     }
 

@@ -21,6 +21,23 @@
     </div>
 </header>
 
+<div class="modal fade" id="notificacionModal" tabindex="-1" aria-labelledby="notificacionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificacionModalLabel">Notificación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p th:text="${mensaje}"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container m-5">
     <h3 th:if="${mensajeError == null}" class="mb-4">Resumen de vinos importados</h3>
     <h3 th:if="${mensajeError != null}" class="mb-4">Algo salió mal</h3>
@@ -64,6 +81,14 @@
         </div>
     </div>
 </div>
+
+<!-- Script para mostrar el modal cuando cargue la página -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const notificacionModal = new bootstrap.Modal(document.getElementById('notificacionModal'));
+      notificacionModal.show(); // Muestra el modal automáticamente
+    });
+</script>
 
 </body>
 </html>

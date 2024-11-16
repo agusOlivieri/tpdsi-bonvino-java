@@ -99,9 +99,10 @@ public class GestorImportarActualizaciones implements ISujeto {
         try {
             List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
             List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
-            String mensaje = notificarUsuariosSeguidores(bodegaSeleccion); // <-- método de enganche
+            String mensaje = notificarUsuariosSeguidores(resumenVinosImportados, bodegaSeleccion); // <-- método de enganche
 
             model.addAttribute("mensajeError", null); // No hay error, así que enviamos null
+            model.addAttribute("mensaje", mensaje);
             return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model);
 
         } catch (ActualizacionNoDisponibleException ex) {
@@ -229,8 +230,8 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     @Override
-    public String notificar(String texto, List<String> seguidores) {
-        String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(texto, seguidores);
+    public String notificar(String texto, List<String> seguidores, List<Map<String, Object>> resumenVinos, String bodega) {
+        String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(texto, seguidores, resumenVinos, bodega);
         return mensaje;
     }
 
@@ -246,7 +247,7 @@ public class GestorImportarActualizaciones implements ISujeto {
         return usuariosSeguidores;
     }
 
-    public String notificarUsuariosSeguidores(String bodegaSeleccion) { // <-- implementación del patrón observer
+    public String notificarUsuariosSeguidores(List<Map<String, Object>> resumenVinos, String bodegaSeleccion) { // <-- implementación del patrón observer
         List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
         List<IObservadorNotif> interfaces = new ArrayList<>();
         String texto = "Últimas novedades de vinos en esta bodega!!";
@@ -263,7 +264,7 @@ public class GestorImportarActualizaciones implements ISujeto {
         }
 
         // notificamos
-        String mensaje = notificar(texto, seguidores);
+        String mensaje = notificar(texto, seguidores, resumenVinos, bodegaSeleccion);
         return mensaje;
     }
 

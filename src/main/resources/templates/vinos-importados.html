@@ -21,15 +21,15 @@
     </div>
 </header>
 
-<div class="modal fade" id="notificacionModal" tabindex="-1" aria-labelledby="notificacionModalLabel" aria-hidden="true">
+<div th:if="${mensaje != null}" class="modal fade" id="notificacionModal" tabindex="-1" aria-labelledby="notificacionModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="notificacionModalLabel">Notificación</h5>
+                <h5 class="modal-title" id="notificacionModalLabel">Notificación recibida por el enófilo</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
-                <p th:text="${mensaje}"></p>
+                <div th:utext="${mensaje}"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -56,7 +56,7 @@
         <div th:if="${vinos != null}" class="container col-8">
             <table class="table m-4 table-bordered table-hover table-dark">
                 <thead class="thead-dark">
-                <tr>
+                <tr class="text-center">
                     <th scope="col">Nombre</th>
                     <th scope="col">Añada</th>
                     <th scope="col">Precio</th>
@@ -64,7 +64,7 @@
                 </tr>
                 </thead>
                 <tbody class="table-group-divider table-divider-color">
-                <tr th:each="vino : ${vinos}" class="table-secondary">
+                <tr  th:each="vino : ${vinos}" class="table-secondary text-center">
                     <td th:text="${vino['nombre']}">Nombre</td>
                     <td th:text="${vino['aniada']}">Añada</td>
                     <td th:text="'$' + ${vino['precio']}">Precio</td>

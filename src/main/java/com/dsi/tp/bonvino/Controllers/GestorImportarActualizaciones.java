@@ -99,15 +99,12 @@ public class GestorImportarActualizaciones implements ISujeto {
         try {
             List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
             List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
-            String mensaje = notificarUsuariosSeguidores(resumenVinosImportados, bodegaSeleccion); // <-- método de enganche
+            String mensaje = notificarUsuariosSeguidores(resumenVinosImportados, bodegaSeleccion);
 
-            model.addAttribute("mensajeError", null); // No hay error, así que enviamos null
-            model.addAttribute("mensaje", mensaje);
-            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados, model);
+            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados,mensaje, null, model);
 
         } catch (ActualizacionNoDisponibleException ex) {
-            model.addAttribute("mensajeError", ex.getMessage());
-            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(Collections.emptyList(), model);
+            return pantallaImportarActualizaciones.mostrarResumenVinosImportados(Collections.emptyList(), null, ex.getMessage(), model);
         }
     }
 
@@ -230,8 +227,8 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     @Override
-    public String notificar(String texto, List<String> seguidores, List<Map<String, Object>> resumenVinos, String bodega) {
-        String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(texto, seguidores, resumenVinos, bodega);
+    public String notificar(List<String> seguidores, List<Map<String, Object>> resumenVinos, String bodega) {
+        String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(seguidores, resumenVinos, bodega);
         return mensaje;
     }
 
@@ -250,7 +247,6 @@ public class GestorImportarActualizaciones implements ISujeto {
     public String notificarUsuariosSeguidores(List<Map<String, Object>> resumenVinos, String bodegaSeleccion) { // <-- implementación del patrón observer
         List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
         List<IObservadorNotif> interfaces = new ArrayList<>();
-        String texto = "Últimas novedades de vinos en esta bodega!!";
 
         // creamos la interfaz de notificacion push
         InterfazNotificacionPush interfazNotificacionPush = new InterfazNotificacionPush();
@@ -264,7 +260,7 @@ public class GestorImportarActualizaciones implements ISujeto {
         }
 
         // notificamos
-        String mensaje = notificar(texto, seguidores, resumenVinos, bodegaSeleccion);
+        String mensaje = notificar(seguidores, resumenVinos, bodegaSeleccion);
         return mensaje;
     }
 

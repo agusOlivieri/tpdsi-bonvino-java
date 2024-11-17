@@ -44,8 +44,10 @@ public class PantallaImportarActualizaciones {
     }
 
 
-    public String mostrarResumenVinosImportados(List<Map<String, Object>> resumenVinosImportados, Model model) {
+    public String mostrarResumenVinosImportados(List<Map<String, Object>> resumenVinosImportados, String mensaje, String mensajeError, Model model) {
         model.addAttribute("vinos", resumenVinosImportados);
+        model.addAttribute("mensajeError", mensajeError);
+        model.addAttribute("mensaje", mensaje);
         return "vinos-importados";
     }
 }

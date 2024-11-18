@@ -39,7 +39,7 @@ public class InterfazNotificacionPush implements IObservadorNotif{
                 .map(vino -> (String) vino.get("nombre"))
                 .collect(Collectors.joining(", "));
         mensaje.append(vinos);
-
+        mensaje.append(".");
 
         return mensaje.toString();
     }

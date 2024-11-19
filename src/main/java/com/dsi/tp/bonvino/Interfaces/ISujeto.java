@@ -12,6 +12,6 @@ public interface ISujeto {
 
     void quitar(IObservadorNotif obs);
 
-    String notificar(List<String> seguidores, List<Map<String, Object>> resumenVinos, String bodega);
+    String notificar();
 
 }

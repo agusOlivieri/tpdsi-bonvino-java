@@ -35,6 +35,10 @@ public class GestorImportarActualizaciones implements ISujeto {
     private List<TipoUva> tipoUvas;
     private List<Enofilo> enofilos;
 
+    private List<String> seguidores;
+    private List<Map<String, Object>> resumenVinos;
+    private String bodega;
+
     public GestorImportarActualizaciones() {
         this.interfazApiBodega = new InterfazApiBodega();
         this.interfazNotificacionPush = new InterfazNotificacionPush();
@@ -76,6 +80,30 @@ public class GestorImportarActualizaciones implements ISujeto {
         this.enofilos = enofilos;
     }
 
+    public List<String> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<String> seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public List<Map<String, Object>> getResumenVinos() {
+        return resumenVinos;
+    }
+
+    public void setResumenVinos(List<Map<String, Object>> resumenVinos) {
+        this.resumenVinos = resumenVinos;
+    }
+
+    public String getBodega() {
+        return bodega;
+    }
+
+    public void setBodega(String bodega) {
+        this.bodega = bodega;
+    }
+
     public String opImportarActualizacionVinos(Model model) {
         List<String> bodegasParaActualizar = buscarBodegasParaActualizar();
 
@@ -97,8 +125,10 @@ public class GestorImportarActualizaciones implements ISujeto {
 
     public String tomarSeleccionBodega(String bodegaSeleccion, Model model) {
         try {
+            setBodega(bodegaSeleccion);
             List<Object> actualizaciones = obtenerActualizacionVinosBodega(bodegaSeleccion);
             List<Map<String, Object>> resumenVinosImportados = actualizarOCrearVinos(bodegaSeleccion, actualizaciones);
+            setResumenVinos(resumenVinosImportados);
             String mensaje = notificarUsuariosSeguidores(resumenVinosImportados, bodegaSeleccion);
 
             return pantallaImportarActualizaciones.mostrarResumenVinosImportados(resumenVinosImportados,mensaje, null, model);
@@ -227,7 +257,7 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     @Override
-    public String notificar(List<String> seguidores, List<Map<String, Object>> resumenVinos, String bodega) {
+    public String notificar() {
         String mensaje = interfazNotificacionPush.notificarNovedadVinoParaBodega(seguidores, resumenVinos, bodega);
         return mensaje;
     }
@@ -245,7 +275,8 @@ public class GestorImportarActualizaciones implements ISujeto {
     }
 
     public String notificarUsuariosSeguidores(List<Map<String, Object>> resumenVinos, String bodegaSeleccion) { // <-- implementación del patrón observer
-        List<String> seguidores = buscarSeguidoresBodega(bodegaSeleccion);
+        List<String> seguidoresDeBodega = buscarSeguidoresBodega(bodegaSeleccion);
+        setSeguidores(seguidoresDeBodega);
         List<IObservadorNotif> interfaces = new ArrayList<>();
 
         // creamos la interfaz de notificacion push
@@ -260,7 +291,7 @@ public class GestorImportarActualizaciones implements ISujeto {
         }
 
         // notificamos
-        String mensaje = notificar(seguidores, resumenVinos, bodegaSeleccion);
+        String mensaje = notificar();
         return mensaje;
     }
 

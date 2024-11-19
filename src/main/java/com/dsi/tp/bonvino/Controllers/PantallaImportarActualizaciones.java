@@ -24,13 +24,17 @@ public class PantallaImportarActualizaciones {
         return "index";
     }
 
-    @GetMapping("/actualizacion-bodegas") // <-- No me gusta el endpoint
+    @GetMapping("/actualizacion-bodegas")
     public String opImportarActualizacionVinos(Model model) {
         return gestorImportarActualizaciones.opImportarActualizacionVinos(model);
     }
 
     @GetMapping("/actualizar")
     public String tomarSeleccionBodega(@RequestParam String bodegaSeleccion, Model model) {
+        return habilitar(bodegaSeleccion, model);
+    }
+
+    public String habilitar(String bodegaSeleccion, Model model) {
         return gestorImportarActualizaciones.tomarSeleccionBodega(bodegaSeleccion, model);
     }
 

@@ -40,7 +40,7 @@ public class PantallaImportarActualizaciones {
 
     public String mostrarBodegasParaActualizar(List<String> bodegasParaActualizar, Model model) {
         if (bodegasParaActualizar.isEmpty()){
-            model.addAttribute("mensaje", "No Hay bodegas con actualizaciones disponibles en este momento");
+            model.addAttribute("mensaje", "No Hay bodegas con actualizaciones disponibles en este momento.");
         };
 
         model.addAttribute("bodegas", bodegasParaActualizar);

@@ -210,7 +210,7 @@ public class GestorImportarActualizaciones implements ISujeto {
 
         if (actualizaciones == null || actualizaciones.isEmpty()) {
             // Si no hay actualizaciones, lanzar una excepción
-            throw new ActualizacionNoDisponibleException("Error en la conexión con la bodega");
+            throw new ActualizacionNoDisponibleException("Error en la conexión con la bodega.");
         }
 
         return actualizaciones;
